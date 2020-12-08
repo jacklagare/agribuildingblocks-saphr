@@ -76,6 +76,7 @@ contract MeatProductContract {
     
     // Events
     event HealthInspectionStatusChanged(string batchId, bool value); // when the health inspection status changes
+    event LabAnalysisStatusChanged(string batchId, bool value); // when the lab analysis status changes
     event MeatProductRegistered(address supplier, string batchId); // when a new meat produt is registered
     
 }
