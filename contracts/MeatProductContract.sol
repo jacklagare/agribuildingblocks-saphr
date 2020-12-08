@@ -4,9 +4,10 @@ pragma solidity 0.7.0;
 
 contract MeatProductContract {
     
-    // Mapping of suppliers and inspectors
+    // Mapping of suppliers, inspectors, and laboratories
     mapping (address => bool) suppliers;
     mapping (address => bool) inspectors;
+    mapping (address => bool) laboratories;
     
     // Mapping of batchId to array index
     mapping (string => uint256) meatProductIndices;
