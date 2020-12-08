@@ -40,8 +40,8 @@ contract MeatProductContract {
         
         meatProduct.batchId = batchId;
         meatProduct.supplier = supplier;
-        meatProduct.healthCertificateFileHash = '';
-        meatProduct.sanitaryCertificateFileHash = '';
+        meatProduct.healthInspectionResults = '';
+        meatProduct.labAnalysisResults = '';
         meatProduct.passedHealthInspection = false;
         meatProduct.passedLabInspection = false;
         
