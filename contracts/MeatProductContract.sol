@@ -26,6 +26,16 @@ contract MeatProductContract {
         string businessAddress;
     }
 
+    // Data structure for storing information about inspection results
+    struct SanitaryInspectionResult {
+        address inspectorAddress;
+        string dateInspected;
+        string timeStarted;
+        string timeFinished;
+        bool passed;
+        string remarks;
+    }
+
     mapping (string => MeatProduct) meatProducts;
     
     constructor () {
