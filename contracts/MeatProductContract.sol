@@ -36,6 +36,16 @@ contract MeatProductContract {
         string remarks;
     }
 
+    // Data structure for storing information about lab analysis results
+    struct LabAnalysisResult {
+        address labAddress;
+        string dateAnalyzed;
+        string timeStarted;
+        string timeFinished;
+        bool passed;
+        string remarks;
+    }
+
     mapping (string => MeatProduct) meatProducts;
     
     constructor () {
