@@ -22,7 +22,12 @@ contract MeatProductContract {
        bool passedLabInspection;
     }
     
-    
+    // Data structure for storing informatino about a supplier
+    struct Supplier {
+        string name;
+        string businessAddress;
+    }
+
     MeatProduct[] public meatProducts;
     
     constructor () {
