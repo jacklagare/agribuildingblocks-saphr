@@ -66,6 +66,12 @@ contract MeatProductContract {
         return true;
         
     }
+
+    function setLabResultStatus(string memory batchId, bool value) public returns (bool){
+        meatProducts[batchId].passedLabInspection = value;
+
+        return true;
+    }
     
     
     // Events
