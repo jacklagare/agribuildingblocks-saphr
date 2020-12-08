@@ -11,6 +11,7 @@ contract MeatProductContract {
     
     // Data structure for storing information about a particular meat product
     struct MeatProduct { 
+       bool initialized;
        string batchId;
        address supplier;
        string healthInspectionResults;
@@ -33,8 +34,15 @@ contract MeatProductContract {
     
     function registerMeatProduct(string memory batchId, address supplier) public returns (bool){
         
+        // Ensure that an existing meat product cannot be overwritten
+        if(meatProducts[batchId].initialized){
+            return false;
+        }
+        
+        // Initialize values and save to the mapping
         MeatProduct memory meatProduct;
         
+        meatProduct.initialized = true;
         meatProduct.batchId = batchId;
         meatProduct.supplier = supplier;
         meatProduct.healthInspectionResults = '';
