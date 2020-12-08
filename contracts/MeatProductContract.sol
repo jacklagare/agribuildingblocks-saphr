@@ -36,6 +36,7 @@ contract MeatProductContract {
         
         // Ensure that an existing meat product cannot be overwritten
         if(meatProducts[batchId].initialized){
+            emit MeatProductRegistered(supplier, batchId, false);
             return false;
         }
         
@@ -52,7 +53,7 @@ contract MeatProductContract {
         
         meatProducts[batchId] = meatProduct;
         
-        emit MeatProductRegistered(supplier, batchId);
+        emit MeatProductRegistered(supplier, batchId, true);
 
         return true;
     }
@@ -69,7 +70,7 @@ contract MeatProductContract {
         
         meatProducts[batchId].passedHealthInspection = value;
         
-        emit HealthInspectionStatusChanged(batchId, value);
+        emit HealthInspectionStatusChanged(batchId, value, true);
         
         return true;
         
@@ -79,15 +80,15 @@ contract MeatProductContract {
         
         meatProducts[batchId].passedLabAnalysis= value;
 
-        emit LabAnalysisStatusChanged(batchId, value);
+        emit LabAnalysisStatusChanged(batchId, value, true);
 
         return true;
     }
     
     
     // Events
-    event HealthInspectionStatusChanged(string batchId, bool value); // when the health inspection status changes
-    event LabAnalysisStatusChanged(string batchId, bool value); // when the lab analysis status changes
-    event MeatProductRegistered(address supplier, string batchId); // when a new meat produt is registered
+    event HealthInspectionStatusChanged(string batchId, bool value, bool success); // when the health inspection status changes
+    event LabAnalysisStatusChanged(string batchId, bool value, bool success); // when the lab analysis status changes
+    event MeatProductRegistered(address supplier, string batchId, bool success); // when a new meat produt is registered
     
 }
