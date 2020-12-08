@@ -9,9 +9,6 @@ contract MeatProductContract {
     mapping (address => bool) inspectors;
     mapping (address => bool) laboratories;
     
-    // Mapping of batchId to array index
-    mapping (string => uint256) meatProductIndices;
-    
     // Data structure for storing information about a particular meat product
     struct MeatProduct { 
        string batchId;
@@ -28,7 +25,7 @@ contract MeatProductContract {
         string businessAddress;
     }
 
-    MeatProduct[] public meatProducts;
+    mapping (string => MeatProduct) meatProducts;
     
     constructor () {
 
@@ -45,18 +42,17 @@ contract MeatProductContract {
         meatProduct.passedHealthInspection = false;
         meatProduct.passedLabInspection = false;
         
-        meatProducts.push(meatProduct);
-        meatProductIndices[batchId] = meatProducts.length - 1;
+        meatProducts[batchId] = meatProduct;
         
         return true;
     }
     
-    function getHealthInspectionStatus(string memory batchId) public view returns (bool){
-        return meatProducts[meatProductIndices[batchId]].passedHealthInspection;
+    function getHealthInspectionStatus(string memory batchId) public view returns (bool){        
+        return meatProducts[batchId].passedHealthInspection;
     }
     
     function getLabResultStatus(string memory batchId) public view returns (bool){
-        return meatProducts[meatProductIndices[batchId]].passedLabInspection;
+        return meatProducts[batchId].passedLabInspection;
     }
     
     function uploadHealthCertificate(string memory batchId) public returns (bool){
@@ -65,9 +61,9 @@ contract MeatProductContract {
     
     function setHealthInspectionStatus(string memory batchId, bool value) public returns (bool){
         
-        meatProducts[meatProductIndices[batchId]].passedHealthInspection = value;
+        meatProducts[batchId].passedHealthInspection = value;
         
-        emit HealthInspectionStatusChanged(batchId, meatProductIndices[batchId], value);
+        emit HealthInspectionStatusChanged(batchId, value);
         
         return true;
         
@@ -75,7 +71,7 @@ contract MeatProductContract {
     
     
     // Events
-    event HealthInspectionStatusChanged(string batchId, uint256 index, bool value); // when the health inspection status changes
+    event HealthInspectionStatusChanged(string batchId, bool value); // when the health inspection status changes
     event MeatProductRegistered(address supplier, string batchId, uint256 index); // when a new meat produt is registered
     
 }
