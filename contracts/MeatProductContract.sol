@@ -16,13 +16,13 @@ contract MeatProductContract {
     struct MeatProduct { 
        string batchId;
        address supplier;
-       string healthCertificateFileHash;
-       string sanitaryCertificateFileHash;
+       string healthInspectionResults;
+       string labAnalysisResults;
        bool passedHealthInspection;
        bool passedLabInspection;
     }
     
-    // Data structure for storing informatino about a supplier
+    // Data structure for storing information about a supplier
     struct Supplier {
         string name;
         string businessAddress;
