@@ -56,11 +56,7 @@ contract MeatProductContract {
     function getLabResultStatus(string memory batchId) public view returns (bool){
         return meatProducts[batchId].passedLabInspection;
     }
-    
-    function uploadHealthCertificate(string memory batchId) public returns (bool){
         
-    }
-    
     function setHealthInspectionStatus(string memory batchId, bool value) public returns (bool){
         
         meatProducts[batchId].passedHealthInspection = value;
