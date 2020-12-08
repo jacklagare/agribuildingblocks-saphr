@@ -44,6 +44,8 @@ contract MeatProductContract {
         
         meatProducts[batchId] = meatProduct;
         
+        emit MeatProductRegistered(supplier, batchId);
+
         return true;
     }
     
