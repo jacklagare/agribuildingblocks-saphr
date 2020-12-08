@@ -16,7 +16,7 @@ contract MeatProductContract {
        string healthInspectionResults;
        string labAnalysisResults;
        bool passedHealthInspection;
-       bool passedLabInspection;
+       bool passedLabAnalysis;
     }
     
     // Data structure for storing information about a supplier
@@ -40,7 +40,7 @@ contract MeatProductContract {
         meatProduct.healthInspectionResults = '';
         meatProduct.labAnalysisResults = '';
         meatProduct.passedHealthInspection = false;
-        meatProduct.passedLabInspection = false;
+        meatProduct.passedLabAnalysis = false;
         
         meatProducts[batchId] = meatProduct;
         
@@ -54,7 +54,7 @@ contract MeatProductContract {
     }
     
     function getLabResultStatus(string memory batchId) public view returns (bool){
-        return meatProducts[batchId].passedLabInspection;
+        return meatProducts[batchId].passedLabAnalysis;
     }
         
     function setHealthInspectionStatus(string memory batchId, bool value) public returns (bool){
@@ -69,7 +69,7 @@ contract MeatProductContract {
 
     function setLabResultStatus(string memory batchId, bool value) public returns (bool){
         
-        meatProducts[batchId].passedLabInspection = value;
+        meatProducts[batchId].passedLabAnalysis= value;
 
         emit LabAnalysisStatusChanged(batchId, value);
 
