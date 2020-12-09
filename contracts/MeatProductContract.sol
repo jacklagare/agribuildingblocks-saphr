@@ -26,26 +26,6 @@ contract MeatProductContract {
         string businessAddress;
     }
 
-    // Data structure for storing information about inspection results
-    struct SanitaryInspectionResult {
-        address inspectorAddress;
-        string dateInspected;
-        string timeStarted;
-        string timeFinished;
-        bool passed;
-        string remarks;
-    }
-
-    // Data structure for storing information about lab analysis results
-    struct LabAnalysisResult {
-        address labAddress;
-        string dateAnalyzed;
-        string timeStarted;
-        string timeFinished;
-        bool passed;
-        string remarks;
-    }
-
     mapping (string => MeatProduct) meatProducts;
     
     constructor () {
