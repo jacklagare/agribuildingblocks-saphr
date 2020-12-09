@@ -79,7 +79,7 @@ contract MeatProductContract {
         return true;
     }
     
-    function setLabAnalysisResult(bytes32 batchId, bytes32result) public returns (bool){
+    function setLabAnalysisResult(bytes32 batchId, bytes32 result) public returns (bool){
 
         require(meatProducts[batchId].labAnalysisResultUploaded == false, 'Lab analysis result already published.');
 
