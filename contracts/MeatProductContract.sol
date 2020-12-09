@@ -18,7 +18,7 @@ contract MeatProductContract {
        bool sanitaryInspectionResultUploaded;
        string labAnalysisResult;
        bool labAnalysisResultUploaded;
-       bool passedHealthInspection;
+       bool passedSanitaryInspection;
        bool passedLabAnalysis;
     }
     
@@ -50,7 +50,7 @@ contract MeatProductContract {
         meatProduct.supplier = supplier;
         meatProduct.sanitaryInspectionResult = '';
         meatProduct.labAnalysisResult = '';
-        meatProduct.passedHealthInspection = false;
+        meatProduct.passedSanitaryInspection = false;
         meatProduct.passedLabAnalysis = false;
         
         meatProducts[batchId] = meatProduct;
@@ -60,8 +60,16 @@ contract MeatProductContract {
         return true;
     }
     
-    function getHealthInspectionStatus(string memory batchId) public view returns (bool){        
-        return meatProducts[batchId].passedHealthInspection;
+    function getSanitaryInspectionResult(string memory batchId) public view returns (string memory){
+        return meatProducts[batchId].sanitaryInspectionResult;
+    }
+    
+    function getSanitaryInspectionStatus(string memory batchId) public view returns (bool){        
+        return meatProducts[batchId].passedSanitaryInspection;
+    }
+    
+    function getLabAnalysisResult(string memory batchId) public view returns (string memory){
+        return meatProducts[batchId].labAnalysisResult;
     }
     
     function getLabResultStatus(string memory batchId) public view returns (bool){
