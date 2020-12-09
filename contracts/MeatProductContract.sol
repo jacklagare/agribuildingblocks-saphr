@@ -72,7 +72,7 @@ contract MeatProductContract {
         return meatProducts[batchId].labAnalysisResult;
     }
     
-    function getLabResultStatus(string memory batchId) public view returns (bool){
+    function getLabAnalysisResultStatus(string memory batchId) public view returns (bool){
         return meatProducts[batchId].passedLabAnalysis;
     }
             
