@@ -22,12 +22,7 @@ contract MeatProductContract {
        bool passedLabAnalysis;
     }
     
-    // Data structure for storing information about a supplier
-    struct Supplier {
-        string name;
-        string businessAddress;
-    }
-
+    //mapping (bytes32 => MeatProduct) meatProducts;
     mapping (string => MeatProduct) meatProducts;
     
     constructor () {
@@ -36,11 +31,7 @@ contract MeatProductContract {
     
     function registerMeatProduct(string memory batchId, address supplier) public returns (bool){
         
-        // Ensure that an existing meat product cannot be overwritten
-        if(meatProducts[batchId].initialized){
-            emit MeatProductRegistered(supplier, batchId, false);
-            return false;
-        }
+        require(meatProducts[batchId].initialized == false, 'Meat product already registered.');
         
         // Initialize values and save to the mapping
         MeatProduct memory meatProduct;
@@ -78,10 +69,7 @@ contract MeatProductContract {
             
     function setSanitaryInspectionResult(string memory batchId, string memory result) public returns (bool){
 
-        if(meatProducts[batchId].sanitaryInspectionResultUploaded){
-            emit SanitaryInspectionResultUploaded(batchId, result, false);
-            return false;
-        }
+        require(meatProducts[batchId].sanitaryInspectionResultUploaded == false, 'Sanitary inspection result already published.');
 
         meatProducts[batchId].sanitaryInspectionResult = result;
         meatProducts[batchId].sanitaryInspectionResultUploaded = true;
@@ -93,10 +81,7 @@ contract MeatProductContract {
     
     function setLabAnalysisResult(string memory batchId, string memory result) public returns (bool){
 
-        if(meatProducts[batchId].labAnalysisResultUploaded){
-            emit SanitaryInspectionResultUploaded(batchId, result, false);
-            return false;
-        }
+        require(meatProducts[batchId].labAnalysisResultUploaded == false, 'Lab analysis result already published.');
 
         meatProducts[batchId].labAnalysisResult = result;
         meatProducts[batchId].labAnalysisResultUploaded = true;
