@@ -14,8 +14,8 @@ contract MeatProductContract {
        bool initialized;
        string batchId;
        address supplier;
-       string healthInspectionResults;
-       string labAnalysisResults;
+       string sanitaryInspectionResult;
+       string labAnalysisResult;
        bool passedHealthInspection;
        bool passedLabAnalysis;
     }
@@ -93,9 +93,19 @@ contract MeatProductContract {
 
         return true;
     }
+    
+    function setLabAnalysisResult(string memory batchId, string memory result) public returns (bool){
+
+        meatProducts[batchId].labAnalysisResult = result;
+
+        emit SanitaryInspectionResultUploaded(batchId, result, true);
+
+        return true;
+    }
 
     // Events
-    event SanitaryInspectionResultUploaded(string batchId, bool value, bool success); // when the sanitary inspection result is uploaded
+    event SanitaryInspectionResultUploaded(string batchId, string value, bool success); // when the sanitary inspection result is uploaded
+    event LabAnalysisResultUploaded(string batchId, string value, bool success); // when the lab analysis result is uploaded
     event HealthInspectionStatusChanged(string batchId, bool value, bool success); // when the health inspection status changes
     event LabAnalysisStatusChanged(string batchId, bool value, bool success); // when the lab analysis status changes
     event MeatProductRegistered(address supplier, string batchId, bool success); // when a new meat produt is registered
