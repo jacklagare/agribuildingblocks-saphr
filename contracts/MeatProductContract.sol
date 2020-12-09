@@ -93,8 +93,6 @@ contract MeatProductContract {
     // Events
     event SanitaryInspectionResultUploaded(bytes32 batchId, bytes32 value, bool success); // when the sanitary inspection result is uploaded
     event LabAnalysisResultUploaded(bytes32 batchId, bytes32 value, bool success); // when the lab analysis result is uploaded
-    event HealthInspectionStatusChanged(bytes32 batchId, bool value, bool success); // when the health inspection status changes
-    event LabAnalysisStatusChanged(bytes32 batchId, bool value, bool success); // when the lab analysis status changes
     event MeatProductRegistered(address supplier, bytes32 batchId, bool success); // when a new meat produt is registered
     
 }
