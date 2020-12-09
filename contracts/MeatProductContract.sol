@@ -67,26 +67,7 @@ contract MeatProductContract {
     function getLabResultStatus(string memory batchId) public view returns (bool){
         return meatProducts[batchId].passedLabAnalysis;
     }
-        
-    function setHealthInspectionStatus(string memory batchId, bool value) public returns (bool){
-        
-        meatProducts[batchId].passedHealthInspection = value;
-        
-        emit HealthInspectionStatusChanged(batchId, value, true);
-        
-        return true;
-        
-    }
-
-    function setLabResultStatus(string memory batchId, bool value) public returns (bool){
-        
-        meatProducts[batchId].passedLabAnalysis= value;
-
-        emit LabAnalysisStatusChanged(batchId, value, true);
-
-        return true;
-    }
-    
+            
     function setSanitaryInspectionResult(string memory batchId, string memory result) public returns (bool){
 
         if(meatProducts[batchId].sanitaryInspectionResultUploaded){
