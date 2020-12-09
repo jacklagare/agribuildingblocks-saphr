@@ -104,8 +104,13 @@ contract MeatProductContract {
     
     function setLabAnalysisResult(string memory batchId, string memory result) public returns (bool){
 
-        meatProducts[batchId].labAnalysisResult = result;
+        if(meatProducts[batchId].labAnalysisResultUploaded){
+            emit SanitaryInspectionResultUploaded(batchId, result, false);
+            return false;
+        }
 
+        meatProducts[batchId].labAnalysisResult = result;
+        meatProducts[batchId].labAnalysisResultUploaded = true;
         emit SanitaryInspectionResultUploaded(batchId, result, true);
 
         return true;
