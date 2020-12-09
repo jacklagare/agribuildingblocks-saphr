@@ -1,4 +1,5 @@
 api/node_modules
 api/config/serviceAccountKey.json
+api/config/.env
 
 .DS_Store
