@@ -29,6 +29,29 @@ contract MeatProductContract {
 
     }
     
+    function registerUser(address user, uint256 userType) public returns (bool){
+        
+        // Register supplier
+        if(userType == 1){
+            suppliers[user] = true;
+        }
+        
+        // Register inspector
+        else if(userType == 2){
+            inspectors[user] = true;
+        }
+
+        // Register laboratory
+        else if (userType == 3) {
+            laboratories[user] = true;
+        }
+        else{
+            return false;
+        }
+
+        return true;
+    }
+
     function registerMeatProduct(bytes32 batchId, address supplier) public returns (bool){
         
         require(meatProducts[batchId].initialized == false, 'Meat product already registered.');
