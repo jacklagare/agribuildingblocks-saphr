@@ -29,6 +29,21 @@ contract MeatProductContract {
 
     }
     
+    modifier onlySupplier{
+        require(suppliers[msg.sender] == true);
+        _;
+    }
+
+    modifier onlyInspector{
+        require(inspectors[msg.sender] == true);
+        _;
+    }
+
+    modifier onlyLaboratory{
+        require(laboratories[msg.sender] == true);
+        _;
+    }
+
     function registerUser(address user, uint256 userType) public returns (bool){
         
         // Register supplier
@@ -52,7 +67,7 @@ contract MeatProductContract {
         return true;
     }
 
-    function registerMeatProduct(bytes32 batchId, address supplier) public returns (bool){
+    function registerMeatProduct(bytes32 batchId, address supplier) onlySupplier public returns (bool){
         
         require(meatProducts[batchId].initialized == false, 'Meat product already registered.');
         
@@ -62,8 +77,6 @@ contract MeatProductContract {
         meatProduct.initialized = true;
         meatProduct.batchId = batchId;
         meatProduct.supplier = supplier;
-        meatProduct.sanitaryInspectionResult = '';
-        meatProduct.labAnalysisResult = '';
         meatProduct.passedSanitaryInspection = false;
         meatProduct.passedLabAnalysis = false;
         
@@ -90,7 +103,7 @@ contract MeatProductContract {
         return meatProducts[batchId].passedLabAnalysis;
     }
             
-    function setSanitaryInspectionResult(bytes32 batchId, bytes32 result) public returns (bool){
+    function setSanitaryInspectionResult(bytes32 batchId, bytes32 result) onlyInspector public returns (bool){
 
         require(meatProducts[batchId].sanitaryInspectionResultUploaded == false, 'Sanitary inspection result already published.');
 
@@ -102,7 +115,7 @@ contract MeatProductContract {
         return true;
     }
     
-    function setLabAnalysisResult(bytes32 batchId, bytes32 result) public returns (bool){
+    function setLabAnalysisResult(bytes32 batchId, bytes32 result) onlyLaboratory public returns (bool){
 
         require(meatProducts[batchId].labAnalysisResultUploaded == false, 'Lab analysis result already published.');
 
