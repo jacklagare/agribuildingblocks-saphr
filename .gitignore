@@ -1,1 +1,4 @@
 api/node_modules
+api/config/serviceAccountKey.json
+
+.DS_Store
