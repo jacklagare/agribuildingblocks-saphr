@@ -12,24 +12,24 @@ contract MeatProductContract {
     // Data structure for storing information about a particular meat product
     struct MeatProduct { 
        bool initialized;
-       string batchId;
+       bytes32 batchId;
        address supplier;
-       string sanitaryInspectionResult;
+       bytes32 sanitaryInspectionResult;
        bool sanitaryInspectionResultUploaded;
-       string labAnalysisResult;
+       bytes32 labAnalysisResult;
        bool labAnalysisResultUploaded;
        bool passedSanitaryInspection;
        bool passedLabAnalysis;
     }
     
     //mapping (bytes32 => MeatProduct) meatProducts;
-    mapping (string => MeatProduct) meatProducts;
+    mapping (bytes32 => MeatProduct) meatProducts;
     
     constructor () {
 
     }
     
-    function registerMeatProduct(string memory batchId, address supplier) public returns (bool){
+    function registerMeatProduct(bytes32 batchId, address supplier) public returns (bool){
         
         require(meatProducts[batchId].initialized == false, 'Meat product already registered.');
         
@@ -51,23 +51,23 @@ contract MeatProductContract {
         return true;
     }
     
-    function getSanitaryInspectionResult(string memory batchId) public view returns (string memory){
+    function getSanitaryInspectionResult(bytes32 batchId) public view returns (bytes32){
         return meatProducts[batchId].sanitaryInspectionResult;
     }
     
-    function getSanitaryInspectionStatus(string memory batchId) public view returns (bool){        
+    function getSanitaryInspectionStatus(bytes32 batchId) public view returns (bool){        
         return meatProducts[batchId].passedSanitaryInspection;
     }
     
-    function getLabAnalysisResult(string memory batchId) public view returns (string memory){
+    function getLabAnalysisResult(bytes32 batchId) public view returns (bytes32){
         return meatProducts[batchId].labAnalysisResult;
     }
     
-    function getLabAnalysisResultStatus(string memory batchId) public view returns (bool){
+    function getLabAnalysisResultStatus(bytes32 batchId) public view returns (bool){
         return meatProducts[batchId].passedLabAnalysis;
     }
             
-    function setSanitaryInspectionResult(string memory batchId, string memory result) public returns (bool){
+    function setSanitaryInspectionResult(bytes32 batchId, bytes32 result) public returns (bool){
 
         require(meatProducts[batchId].sanitaryInspectionResultUploaded == false, 'Sanitary inspection result already published.');
 
@@ -79,7 +79,7 @@ contract MeatProductContract {
         return true;
     }
     
-    function setLabAnalysisResult(string memory batchId, string memory result) public returns (bool){
+    function setLabAnalysisResult(bytes32 batchId, bytes32result) public returns (bool){
 
         require(meatProducts[batchId].labAnalysisResultUploaded == false, 'Lab analysis result already published.');
 
@@ -91,10 +91,10 @@ contract MeatProductContract {
     }
 
     // Events
-    event SanitaryInspectionResultUploaded(string batchId, string value, bool success); // when the sanitary inspection result is uploaded
-    event LabAnalysisResultUploaded(string batchId, string value, bool success); // when the lab analysis result is uploaded
-    event HealthInspectionStatusChanged(string batchId, bool value, bool success); // when the health inspection status changes
-    event LabAnalysisStatusChanged(string batchId, bool value, bool success); // when the lab analysis status changes
-    event MeatProductRegistered(address supplier, string batchId, bool success); // when a new meat produt is registered
+    event SanitaryInspectionResultUploaded(bytes32 batchId, bytes32 value, bool success); // when the sanitary inspection result is uploaded
+    event LabAnalysisResultUploaded(bytes32 batchId, bytes32 value, bool success); // when the lab analysis result is uploaded
+    event HealthInspectionStatusChanged(bytes32 batchId, bool value, bool success); // when the health inspection status changes
+    event LabAnalysisStatusChanged(bytes32 batchId, bool value, bool success); // when the lab analysis status changes
+    event MeatProductRegistered(address supplier, bytes32 batchId, bool success); // when a new meat produt is registered
     
 }
