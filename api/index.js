@@ -1,6 +1,16 @@
 const restify = require('restify')
 const routerMagic = require('restify-router-magic')
 const corsMiddleware = require('restify-cors-middleware')
+const admin = require('firebase-admin');
+const serviceAccount = require('./config/serviceAccountKey.json');
+
+global.firebase = admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
+module.exports = {
+    firebase: firebase
+}
 
 let server = restify.createServer();
 
