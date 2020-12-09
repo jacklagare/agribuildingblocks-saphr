@@ -15,7 +15,9 @@ contract MeatProductContract {
        string batchId;
        address supplier;
        string sanitaryInspectionResult;
+       bool sanitaryInspectionResultUploaded;
        string labAnalysisResult;
+       bool labAnalysisResultUploaded;
        bool passedHealthInspection;
        bool passedLabAnalysis;
     }
@@ -87,7 +89,13 @@ contract MeatProductContract {
     
     function setSanitaryInspectionResult(string memory batchId, string memory result) public returns (bool){
 
+        if(meatProducts[batchId].sanitaryInspectionResultUploaded){
+            emit SanitaryInspectionResultUploaded(batchId, result, false);
+            return false;
+        }
+
         meatProducts[batchId].sanitaryInspectionResult = result;
+        meatProducts[batchId].sanitaryInspectionResultUploaded = true;
 
         emit SanitaryInspectionResultUploaded(batchId, result, true);
 
