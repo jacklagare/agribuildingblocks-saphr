@@ -32,18 +32,18 @@ module.exports = {
             }
             */
 
-            let registerSupplierEncodedABI = smartContract
+            let registerLaboratoryEncodedABI = smartContract
                 .methods
-                .registerUser(address,1)
+                .registerUser(address,3)
                 .encodeABI();
 
             let transactionHash = await TransactionHelper.buildTransaction(
                 process.env.CONTRACT_OWNER_ADDRESS,
                 process.env.CONTRACT_OWNER_PRIVATE_KEY,
-                registerSupplierEncodedABI
+                registerLaboratoryEncodedABI
             )    
 
-            let doc = await db.collection('suppliers').add({
+            let doc = await db.collection('laboratories').add({
                 name: req.body.name,
                 businessAddress: req.body.businessAddress,
                 address: address,
@@ -51,7 +51,7 @@ module.exports = {
             });
 
             res.send(200,{
-                message: 'Eth account successfully created for supplier.',
+                message: 'Account successfully created for laboratory.',
                 address: address,
                 privateKey: privateKey
             });

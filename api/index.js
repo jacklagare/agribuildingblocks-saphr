@@ -73,11 +73,6 @@ global.contractABI = [
 				"internalType": "bytes32",
 				"name": "batchId",
 				"type": "bytes32"
-			},
-			{
-				"internalType": "address",
-				"name": "supplier",
-				"type": "address"
 			}
 		],
 		"name": "registerMeatProduct",
@@ -151,6 +146,11 @@ global.contractABI = [
 				"internalType": "bytes32",
 				"name": "result",
 				"type": "bytes32"
+			},
+			{
+				"internalType": "bool",
+				"name": "passed",
+				"type": "bool"
 			}
 		],
 		"name": "setLabAnalysisResult",
@@ -175,6 +175,11 @@ global.contractABI = [
 				"internalType": "bytes32",
 				"name": "result",
 				"type": "bytes32"
+			},
+			{
+				"internalType": "bool",
+				"name": "passed",
+				"type": "bool"
 			}
 		],
 		"name": "setSanitaryInspectionResult",
@@ -187,6 +192,31 @@ global.contractABI = [
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "userType",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "isSupplier",
+				"type": "bool"
+			}
+		],
+		"name": "UserRegistered",
+		"type": "event"
 	},
 	{
 		"inputs": [
@@ -259,6 +289,19 @@ global.contractABI = [
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
