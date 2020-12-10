@@ -27,35 +27,43 @@ module.exports = {
 
             let supplierPrivateKeyEncoded = bcrypt.hashSync(supplierPrivateKey,10);
 
+            console.log('Checking list of suppliers...');
             let suppliers = db.collectionGroup('suppliers')
                 .where('address', '==', supplier);
             
+                console.log('Done checking list of suppliers...');
+
             let result = await suppliers.get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
 
                     if(!querySnapshot.empty){
                         let hashedPrivateKey = doc._fieldsProto.private_key.stringValue;
                         let isKeyValid = bcrypt.compareSync(supplierPrivateKey,hashedPrivateKey);
-
+                        console.log(isKeyValid);
                         if(isKeyValid){
 
                             let registerSupplierEncodedABI = smartContract
                                 .methods
                                 .registerMeatProduct(batchIdHash)
                                 .encodeABI();
-
+                            console.log('Sending transaction to blockchain...');
                             let transactionHash = TransactionHelper.buildTransaction(
                                 supplier,
                                 supplierPrivateKey,
                                 registerSupplierEncodedABI
                             )    
+                            console.log('Done sending transaction to blockchain...');
 
                             res.send(200,{
                                 message: 'Meat product successfully registered.',
                                 supplier: supplier,
-                                batchId: batchIdHash
+                                batchId: batchId
                             });
                             return
+                        }
+                        else{
+                            res.send(401,'Invalid credentials supplied.');
+                            return;
                         }
                     }
 
