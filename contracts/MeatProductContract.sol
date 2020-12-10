@@ -4,6 +4,8 @@ pragma solidity 0.7.0;
 
 contract MeatProductContract {
     
+    address public owner;
+    
     // Mapping of suppliers, inspectors, and laboratories
     mapping (address => bool) suppliers;
     mapping (address => bool) inspectors;
@@ -26,9 +28,14 @@ contract MeatProductContract {
     mapping (bytes32 => MeatProduct) meatProducts;
     
     constructor () {
-
+        owner = msg.sender;
     }
     
+    modifier onlyOwner {
+      require(msg.sender == owner);
+      _;
+    }
+   
     modifier onlySupplier{
         require(suppliers[msg.sender] == true);
         _;
@@ -44,11 +51,12 @@ contract MeatProductContract {
         _;
     }
 
-    function registerUser(address user, uint256 userType) public returns (bool){
+    function registerUser(address user, uint256 userType) onlyOwner public returns (bool){
         
         // Register supplier
         if(userType == 1){
             suppliers[user] = true;
+            emit UserRegistered(1, user, suppliers[user]);
         }
         
         // Register inspector
@@ -63,10 +71,14 @@ contract MeatProductContract {
         else{
             return false;
         }
-
+        
         return true;
     }
-
+    
+    function checkIfSupplier(address supplier) public view returns (bool){
+        return suppliers[supplier];
+    }
+    
     function registerMeatProduct(bytes32 batchId, address supplier) onlySupplier public returns (bool){
         
         require(meatProducts[batchId].initialized == false, 'Meat product already registered.');
@@ -127,6 +139,7 @@ contract MeatProductContract {
     }
 
     // Events
+    event UserRegistered(uint256 userType, address, bool isSupplier);
     event SanitaryInspectionResultUploaded(bytes32 batchId, bytes32 value, bool success); // when the sanitary inspection result is uploaded
     event LabAnalysisResultUploaded(bytes32 batchId, bytes32 value, bool success); // when the lab analysis result is uploaded
     event MeatProductRegistered(address supplier, bytes32 batchId, bool success); // when a new meat produt is registered
