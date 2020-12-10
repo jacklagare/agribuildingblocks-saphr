@@ -38,6 +38,8 @@ module.exports = {
                 .encodeABI();
 
             let transactionHash = await TransactionHelper.buildTransaction(
+                process.env.CONTRACT_OWNER_ADDRESS,
+                process.env.CONTRACT_OWNER_PRIVATE_KEY,
                 registerSupplierEncodedABI
             )    
 
@@ -50,7 +52,8 @@ module.exports = {
 
             res.send(200,{
                 message: 'Eth account successfully created for supplier.',
-                address: address
+                address: address,
+                privateKey: privateKey
             });
             return
         }
