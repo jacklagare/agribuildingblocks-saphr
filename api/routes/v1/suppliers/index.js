@@ -22,7 +22,7 @@ module.exports = {
             let privateKey = newAccount.privateKey.substring(2);
             
             let encodedPrivateKey = bcrypt.hashSync(privateKey,10);
-
+            
             // Check if address already exists
             /*const suppliersCollection = db.collection('suppliers');
             const addressQuery = await suppliersCollection.where('address', '==', address).get();
@@ -53,7 +53,7 @@ module.exports = {
             res.send(200,{
                 message: 'Eth account successfully created for supplier.',
                 address: address,
-                privateKey: privateKey
+                privateKey: '0x'+privateKey
             });
             return
         }
