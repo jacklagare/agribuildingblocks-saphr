@@ -24,7 +24,7 @@ contract MeatProductContract {
        bool passedLabAnalysis;
     }
     
-    //mapping (bytes32 => MeatProduct) meatProducts;
+    
     mapping (bytes32 => MeatProduct) meatProducts;
     
     constructor () {
@@ -37,17 +37,17 @@ contract MeatProductContract {
     }
    
     modifier onlySupplier{
-        require(suppliers[msg.sender] == true);
+        require(suppliers[msg.sender]);
         _;
     }
 
     modifier onlyInspector{
-        require(inspectors[msg.sender] == true);
+        require(inspectors[msg.sender]);
         _;
     }
 
     modifier onlyLaboratory{
-        require(laboratories[msg.sender] == true);
+        require(laboratories[msg.sender]);
         _;
     }
 
@@ -75,11 +75,8 @@ contract MeatProductContract {
         return true;
     }
     
-    function checkIfSupplier(address supplier) public view returns (bool){
-        return suppliers[supplier];
-    }
-    
-    function registerMeatProduct(bytes32 batchId, address supplier) onlySupplier public returns (bool){
+
+    function registerMeatProduct(bytes32 batchId) onlySupplier public returns (bool){
         
         require(meatProducts[batchId].initialized == false, 'Meat product already registered.');
         
@@ -88,13 +85,11 @@ contract MeatProductContract {
         
         meatProduct.initialized = true;
         meatProduct.batchId = batchId;
-        meatProduct.supplier = supplier;
-        meatProduct.passedSanitaryInspection = false;
-        meatProduct.passedLabAnalysis = false;
-        
+        meatProduct.supplier = msg.sender;
+
         meatProducts[batchId] = meatProduct;
         
-        emit MeatProductRegistered(supplier, batchId, true);
+        emit MeatProductRegistered(msg.sender, batchId, true);
 
         return true;
     }
@@ -115,29 +110,34 @@ contract MeatProductContract {
         return meatProducts[batchId].passedLabAnalysis;
     }
             
-    function setSanitaryInspectionResult(bytes32 batchId, bytes32 result) onlyInspector public returns (bool){
+    function setSanitaryInspectionResult(bytes32 batchId, bytes32 result, bool passed) onlyInspector public returns (bool){
 
         require(meatProducts[batchId].sanitaryInspectionResultUploaded == false, 'Sanitary inspection result already published.');
 
         meatProducts[batchId].sanitaryInspectionResult = result;
         meatProducts[batchId].sanitaryInspectionResultUploaded = true;
-
+        
+        meatProducts[batchId].passedSanitaryInspection = passed;
+        
         emit SanitaryInspectionResultUploaded(batchId, result, true);
 
         return true;
     }
     
-    function setLabAnalysisResult(bytes32 batchId, bytes32 result) onlyLaboratory public returns (bool){
+    function setLabAnalysisResult(bytes32 batchId, bytes32 result,  bool passed) onlyLaboratory public returns (bool){
 
         require(meatProducts[batchId].labAnalysisResultUploaded == false, 'Lab analysis result already published.');
 
         meatProducts[batchId].labAnalysisResult = result;
         meatProducts[batchId].labAnalysisResultUploaded = true;
+        
+        meatProducts[batchId].passedLabAnalysis = passed;
+        
         emit SanitaryInspectionResultUploaded(batchId, result, true);
 
         return true;
     }
-
+    
     // Events
     event UserRegistered(uint256 userType, address, bool isSupplier);
     event SanitaryInspectionResultUploaded(bytes32 batchId, bytes32 value, bool success); // when the sanitary inspection result is uploaded
