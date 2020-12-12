@@ -35,7 +35,6 @@ module.exports = {
 
             let result = await suppliers.get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
-
                     if(!querySnapshot.empty){
                         let hashedPrivateKey = doc._fieldsProto.private_key.stringValue;
                         let isKeyValid = bcrypt.compareSync(supplierPrivateKey,hashedPrivateKey);
