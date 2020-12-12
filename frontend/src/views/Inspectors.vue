@@ -63,7 +63,8 @@
     <br/><br/><br/><br/>
 
     <h3>Record Inspection Result</h3>
-    
+    <p>Please include <code><b>0x</b></code> in the address and key.</p>
+    <br/>
     <v-form>
             <v-container>
                 <v-text-field

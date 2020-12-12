@@ -5,7 +5,7 @@
         :is-full-page="fullPage">
     </loading>    
     <br/>  
-    <h1>Inspectors</h1>
+    <h1>Laboratories</h1>
     <br/>
     <v-btn
         color="primary"
@@ -62,7 +62,8 @@
     <br/><br/><br/><br/>
 
     <h3>Record Laboratory Analysis Result</h3>
-    
+    <p>Please include <code><b>0x</b></code> in the address and key.</p>
+    <br/>
     <v-form>
             <v-container>
                 <v-text-field
