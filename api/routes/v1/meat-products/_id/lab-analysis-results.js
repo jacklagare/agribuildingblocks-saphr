@@ -92,7 +92,7 @@ module.exports = {
                             
                             console.log('Checking status of transaction.');
                 
-                            let transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+                            let transactionReceipt = web3.eth.getTransactionReceipt(transactionHash);
                     
                             console.log('Done checking status of transaction.');
 
