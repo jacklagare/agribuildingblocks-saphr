@@ -1,11 +1,13 @@
 <template>
     <div>
         <br/><br/><br/><br/>
+        <h1> Meat Product </h1>
+        <br/><br/>
         <p>{{errorMessage}}</p>
         
-        <h2>Batch ID: {{batchId}}</h2>
-        <h2>Inspection Result: <v-icon large color="red darken-2">{{iconValueInspection}}</v-icon> {{inspectionResult}}</h2>
-        <h2>Lab Analysis Result: <v-icon large :color="iconColorLab">{{iconValueLab}}</v-icon> {{labAnalysisResult}}</h2>
+        <p>Batch ID: {{batchId}}</p>
+        <p>Inspection Result: <v-icon large color="red darken-2">{{iconValueInspection}}</v-icon> {{inspectionResult}}</p>
+        <p>Lab Analysis Result: <v-icon large :color="iconColorLab">{{iconValueLab}}</v-icon> {{labAnalysisResult}}</p>
         
     </div>
 </template>
@@ -13,6 +15,10 @@
 <script>
 
 import axios from 'axios';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+import Vue from 'vue';
+Vue.use(VueToast);
 
 export default {
     data() {
@@ -33,15 +39,18 @@ export default {
     },
     methods: {
         async checkMeatProduct(){
-            let batchIdParam = this.$route.query.batchId.trim();
-            
+            let batchIdParam = this.$route.query.batchId;
             let self = this;
 
             if(batchIdParam == "" || batchIdParam == undefined){
-                self.errorMessage = "Invalid or undefined Batch ID. Please check your URL.";
+                Vue.$toast.open({
+                    message: 'Please provide a valid batch ID.',
+                    type: 'error',
+                    duration: 5000
+                });
             }
             else{
-                self.batchId = batchIdParam;
+                self.batchId = batchIdParam.trim();
 
                 let response = await axios.get(`http://localhost:8085/v1/meat-products/${batchIdParam}/sanitary-inspection-results`, {
                     headers: {
