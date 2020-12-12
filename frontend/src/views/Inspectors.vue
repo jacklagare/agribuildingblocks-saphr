@@ -31,9 +31,9 @@
                 </v-text-field>
 
                 <v-text-field
-                    v-model="inspectorAddress"
+                    v-model="businessAddress"
                     counter="25"
-                    label="Inspector Address"
+                    label="Business Address"
                     >
                 </v-text-field>
             </v-container>
@@ -65,21 +65,21 @@
     <v-form>
             <v-container>
                 <v-text-field
-                v-model="inspectorAddress"
+                v-model="sanitaryInspectionInspectorAddress"
                 counter="25"
                 label="Inspector Address"
                 >
                 </v-text-field>
 
                 <v-text-field
-                    v-model="inspectorKey"
+                    v-model="sanitaryInspectionInspectorKey"
                     counter="25"
                     label="Inspector Private Key"
                     >
                 </v-text-field>
 
                 <v-text-field
-                v-model="inspectionResultBatchId"
+                v-model="sanitaryInspectionBatchId"
                 counter="25"
                 label="Batch ID"
                 >
@@ -129,7 +129,7 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default { 
-    
+
     data() {
         return {
             isLoading: false,
@@ -137,9 +137,10 @@ export default {
             accountAddress: "",
             accountKey: "",
             inspectorName: "",
-            inspectorAddress: "",
-            inspectorRecordAddress: "",
-            inspectorKey: "",
+            businessAddress: "",
+            sanitaryInspectionInspectorAddress: "",
+            sanitaryInspectionInspectorKey: "",
+            sanitaryInspectionBatchId: "",
             batchId: "",
             inspectionResultBatchId: "",
             inspectionResult: "",
@@ -157,11 +158,11 @@ export default {
         async registerInspector() {
             
             let inspectorName = this.inspectorName;
-            let inspectorAddress = this.inspectorAddress;
+            let businessAddress = this.businessAddress;
 
             let data = {
                 name: inspectorName,
-                businessAddress: inspectorAddress
+                businessAddress: businessAddress
             }
             this.isLoading = true;
             let response = await axios.post('http://localhost:8085/v1/inspectors',data, {
@@ -185,9 +186,9 @@ export default {
 
         async recordInspectionStatus() {
             
-            let inspectorAddress = this.inspectorAddress;
-            let inspectorKey = this.inspectorKey;
-            let batchId = this.batchId;
+            let inspectorAddress = this.sanitaryInspectionInspectorAddress;
+            let inspectorKey = this.sanitaryInspectionInspectorKey;
+            let batchId = this.sanitaryInspectionBatchId;
             let sanitaryInspectionResult = this.sanitaryInspectionResultFormInput == "passed" ?true:false;
 
             let data = {

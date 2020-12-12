@@ -42,6 +42,24 @@ const routes = [
     }
   },
 
+  {
+    path: '/generate-qr-code',
+    name: 'GenerateQRCode',
+    component: () => import('@/views/QRCode.vue'),
+    meta: {
+        title: 'AgriBuildingBlocks > QR Code Generator'
+    }
+  },
+
+  {
+    path: '/check-meat-product',
+    name: 'CheckMeatProduct',
+    component: () => import('@/views/MeatProduct.vue'),
+    meta: {
+        title: 'AgriBuildingBlocks > Check Meat Product'
+    }
+  },
+
  
 ]
 

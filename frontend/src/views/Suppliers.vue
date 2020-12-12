@@ -68,7 +68,7 @@
     <v-form>
             <v-container>
                 <v-text-field
-                v-model="supplierAddress"
+                v-model="businessAddress"
                 counter="25"
                 label="Supplier Address"
                 >
@@ -98,6 +98,7 @@
     <br/><br/>
         <p>Please take note of the information below. This will not be saved by the application.</p>
         <br/>
+        <p><b>Status:</b>{{registerMeatProductStatus}}</p>
         <p><b>Batch ID:</b> <code>{{batchId}}</code></p>
     </div>
     <br/><br/>
@@ -124,6 +125,7 @@ export default {
             supplierAddress: "",
             supplierKey: "",
             batchId: "",
+            registerMeatProductStatus: "",
         };
     },
     components: {
@@ -181,10 +183,12 @@ export default {
             let self = this;
 
             if(response.status == 200){
+                self.registerMeatProductStatus = 'Success';
                 self.batchId = response.data.batchId; 
                 console.log('done')
             }
             else{
+                self.registerMeatProductStatus = 'Failed';
                 console.log('failed')
             } 
             this.isLoading = false;

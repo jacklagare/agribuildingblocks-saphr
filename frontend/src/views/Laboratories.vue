@@ -31,9 +31,9 @@
                 </v-text-field>
 
                 <v-text-field
-                    v-model="laboratoryAddress"
+                    v-model="businessAddress"
                     counter="25"
-                    label="Laboratory Address"
+                    label="Business Address"
                     >
                 </v-text-field>
             </v-container>
@@ -65,21 +65,21 @@
     <v-form>
             <v-container>
                 <v-text-field
-                v-model="laboratoryAddress"
+                v-model="laboratoryAnalysisAddress"
                 counter="25"
                 label="Laboratory Address"
                 >
                 </v-text-field>
 
                 <v-text-field
-                    v-model="laboratoryKey"
+                    v-model="laboratoryAnalysisKey"
                     counter="25"
                     label="Laboratory Private Key"
                     >
                 </v-text-field>
 
                 <v-text-field
-                v-model="analysisResultBatchId"
+                v-model="laboratoryAnalysisBatchId"
                 counter="25"
                 label="Batch ID"
                 >
@@ -137,10 +137,12 @@ export default {
             accountAddress: "",
             accountKey: "",
             laboratoryName: "",
-            laboratoryAddress: "",
-            laboratoryRecordAddress: "",
+            businessAddress: "",
+            laboratoryAnalysisAddress: "",
+            laboratoryAnalysisKey: "",
+            sanitaryInspectionBatchId: "",
             laboratoryKey: "",
-            batchId: "",
+            laboratoryAnalysisBatchId: "",
             analysisResultBatchId: "",
             analysisResult: "",
             laboratoryAnalysisResultFormInput: "",
@@ -157,11 +159,11 @@ export default {
         async registerLaboratory() {
             
             let laboratoryName = this.laboratoryName;
-            let laboratoryAddress = this.laboratoryAddress;
+            let businessAddress = this.businessAddress;
 
             let data = {
                 name: laboratoryName,
-                businessAddress: laboratoryAddress
+                businessAddress: businessAddress
             }
             this.isLoading = true;
             let response = await axios.post('http://localhost:8085/v1/laboratories',data, {
@@ -185,9 +187,9 @@ export default {
 
         async recordAnalysisStatus() {
             
-            let laboratoryAddress = this.laboratoryAddress;
-            let laboratoryKey = this.laboratoryKey;
-            let batchId = this.batchId;
+            let laboratoryAddress = this.laboratoryAnalysisAddress;
+            let laboratoryKey = this.laboratoryAnalysisKey;
+            let batchId = this.laboratoryAnalysisBatchId;
             let analysisInspectionResult = this.analysisInspectionResult == "passed" ?true:false;
 
             let data = {
@@ -206,11 +208,11 @@ export default {
             let self = this;
 
             if(response.status == 200){
-                self.uploadResultStatus = "Result successfully uploaded."
+                self.uploadResultStatus = "Success"
                 console.log('done')
             }
             else{
-                self.uploadResultStatus = "Result was not uploaded."
+                self.uploadResultStatus = "Failed"
                 console.log('failed')
             } 
             this.isLoading = false;
