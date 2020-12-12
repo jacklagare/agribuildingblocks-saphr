@@ -23,39 +23,75 @@ module.exports = {
             
             let encodedPrivateKey = bcrypt.hashSync(privateKey,10);
             
-            // Check if address already exists
-            /*const suppliersCollection = db.collection('suppliers');
-            const addressQuery = await suppliersCollection.where('address', '==', address).get();
+            console.log("Check for existing inspectors...");
+
+            let docRef = await db.collection("inspectors").select("name").where("name", "==",  req.body.name.trim());
             
-            if(addressQuery == null){
-                console.log('Not found');
+            let uniqueInspector = true;
+
+            await docRef.get().then(function(doc) {
+                if (!doc.empty) {
+                    uniqueInspector = false;
+                } 
+            }).catch(function(error) {
+                console.log(err)
+                res.send(500,{
+                    message: 'Account creation failed',
+                    error: error
+                });
+                return
+            });
+
+            if(uniqueInspector){
+                let registerSupplierEncodedABI = smartContract
+                    .methods
+                    .registerUser(address,2)
+                    .encodeABI();
+                
+                console.log('Sending transaction to blockchain...');
+                let transactionHash = await TransactionHelper.buildTransaction(
+                    process.env.CONTRACT_OWNER_ADDRESS,
+                    process.env.CONTRACT_OWNER_PRIVATE_KEY,
+                    registerSupplierEncodedABI
+                )    
+                console.log('Done sending transaction to blockchain...');
+                
+                console.log('Checking status of transaction.');
+                
+                let transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+        
+                console.log('Done checking status of transaction.');
+
+                if(transactionReceipt.status){
+                    let doc = await db.collection('inspectors').add({
+                        name: req.body.name,
+                        businessAddress: req.body.businessAddress,
+                        address: address,
+                        private_key: encodedPrivateKey
+                    });
+
+                    res.send(200,{
+                        message: 'Account successfully created for inspector.',
+                        address: address,
+                        privateKey: privateKey
+                    });
+                    return
+                }
+                else{
+                    res.send(500,{
+                        message: 'Account creation failed',
+                        error: 'Blockchain transaction failed.'
+                    });
+                    return
+                }
             }
-            */
-
-            let registerSupplierEncodedABI = smartContract
-                .methods
-                .registerUser(address,2)
-                .encodeABI();
-
-            let transactionHash = await TransactionHelper.buildTransaction(
-                process.env.CONTRACT_OWNER_ADDRESS,
-                process.env.CONTRACT_OWNER_PRIVATE_KEY,
-                registerSupplierEncodedABI
-            )    
-
-            let doc = await db.collection('inspectors').add({
-                name: req.body.name,
-                businessAddress: req.body.businessAddress,
-                address: address,
-                private_key: encodedPrivateKey
-            });
-
-            res.send(200,{
-                message: 'Account successfully created for inspector.',
-                address: address,
-                privateKey: privateKey
-            });
-            return
+            else{
+                res.send(500,{
+                    message: 'Account creation failed',
+                    error: 'Account being created already exists.'
+                });
+                return
+            }
         }
         catch(err){
             console.log(err)
