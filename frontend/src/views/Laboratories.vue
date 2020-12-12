@@ -18,6 +18,7 @@
     >
         <v-icon>mdi-home</v-icon>
     </v-btn>
+    <br/><br/><br/><br/>
     <div id ="registerAccountContainer">
     <h3>Register Account</h3>
     <br/>
