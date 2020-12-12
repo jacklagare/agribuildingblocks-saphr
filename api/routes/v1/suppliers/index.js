@@ -42,20 +42,32 @@ module.exports = {
                 process.env.CONTRACT_OWNER_PRIVATE_KEY,
                 registerSupplierEncodedABI
             )    
+            
+            let transactionReceipt = await web3.eth.getTransaction(transactionHash);
 
-            let doc = await db.collection('suppliers').add({
-                name: req.body.name,
-                businessAddress: req.body.businessAddress,
-                address: address,
-                private_key: encodedPrivateKey
-            });
+            if(transactionReceipt.status){
+                let doc = await db.collection('suppliers').add({
+                    name: req.body.name,
+                    businessAddress: req.body.businessAddress,
+                    address: address,
+                    private_key: encodedPrivateKey
+                });
 
-            res.send(200,{
-                message: 'Eth account successfully created for supplier.',
-                address: address,
-                privateKey: privateKey
+                res.send(200,{
+                    message: 'Account successfully created for supplier.',
+                    address: address,
+                    privateKey: privateKey
+                });
+                return
+            }
+            else{
+                console.log(err)
+                res.send(500,{
+                message: 'Account creation failed',
+                error: err
             });
             return
+            }
         }
         catch(err){
             console.log(err)
