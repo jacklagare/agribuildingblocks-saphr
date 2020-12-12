@@ -3,7 +3,6 @@
         <br/><br/><br/><br/>
         <h1> Meat Product </h1>
         <br/><br/>
-        <p>{{errorMessage}}</p>
         
         <p>Batch ID: {{batchId}}</p>
         <p>Inspection Result: <v-icon large color="red darken-2">{{iconValueInspection}}</v-icon> {{inspectionResult}}</p>
@@ -23,7 +22,6 @@ Vue.use(VueToast);
 export default {
     data() {
         return {
-            errorMessage: "",
             batchId: "",
             inspectionResult: "",
             labAnalysisResult: "",
