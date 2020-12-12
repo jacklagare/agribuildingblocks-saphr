@@ -82,6 +82,7 @@ module.exports = {
                                 .methods
                                 .setSanitaryInspectionResult(batchIdHash,resultsHash,passed)
                                 .encodeABI();
+
                             console.log('Sending transaction to blockchain...');
                             let transactionHash = TransactionHelper.buildTransaction(
                                 inspector,
@@ -89,13 +90,29 @@ module.exports = {
                                 uploadSanitaryInspectionResultEncodedABI
                             )    
                             console.log('Done sending transaction to blockchain...');
+                            
+                            console.log('Checking status of transaction.');
+                
+                            let transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+                    
+                            console.log('Done checking status of transaction.');
 
-                            res.send(200,{
-                                message: 'Done uploading result.',
-                                inspector: inspector,
-                                batchId: batchId
-                            });
-                            return
+                            if(transactionReceipt.status){
+                                res.send(200,{
+                                    message: 'Done uploading result.',
+                                    inspector: inspector,
+                                    batchId: batchId
+                                });
+                                return
+                            }
+                            else{
+                                res.send(500,{
+                                    message: 'Result not uploaded successfully.',
+                                    error: 'Blockchain transaction failed.'
+                                });
+                                return
+                            }
+                           
                         }
                         else{
                             res.send(401,'Invalid credentials supplied.');

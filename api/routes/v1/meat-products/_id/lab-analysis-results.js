@@ -40,7 +40,6 @@ module.exports = {
         const keccak = require('keccak')
         
         try{
-           
             // Connect to chain
             const web3 = new Web3(new Web3.providers.HttpProvider(process.env.WEB3_PROVIDER_URL));
             const smartContract = new web3.eth.Contract(contractABI,process.env.ETH_ADDRESS);
@@ -58,7 +57,7 @@ module.exports = {
             let laboratories = db.collectionGroup('laboratories')
                 .where('address', '==', laboratory);
             
-                console.log('Done checking list of laboratories...');
+            console.log('Done checking list of laboratories...');
 
             let result = await laboratories.get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
@@ -90,13 +89,28 @@ module.exports = {
                                 uploadLaboratoryAnalysisResultEncodedABI
                             )    
                             console.log('Done sending transaction to blockchain...');
+                            
+                            console.log('Checking status of transaction.');
+                
+                            let transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+                    
+                            console.log('Done checking status of transaction.');
 
-                            res.send(200,{
-                                message: 'Done uploading result.',
-                                laboratory: laboratory,
-                                batchId: batchId
-                            });
-                            return
+                            if(transactionReceipt.status){
+                                res.send(200,{
+                                    message: 'Done uploading result.',
+                                    laboratory: laboratory,
+                                    batchId: batchId
+                                });
+                                return
+                            }
+                            else{
+                                res.send(500,{
+                                    message: 'Result not uploaded successfully.',
+                                    error: 'Blockchain transaction failed.'
+                                });
+                                return
+                            }
                         }
                         else{
                             res.send(401,'Invalid credentials supplied.');
