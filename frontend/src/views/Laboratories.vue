@@ -90,7 +90,6 @@
                     v-model="analysisInspectionResult"
                     row
                 >
-                
                     <v-radio
                     label="Passed"
                     value="passed"
@@ -229,9 +228,7 @@ export default {
             let batchId = this.laboratoryAnalysisBatchId;
             let analysisInspectionResult = this.analysisInspectionResult == "passed" ?true:false;
 
-            if(laboratoryAddress == '' || laboratoryKey == '' || batchId == ''
-                || analysisInspectionResult == ''){
-                
+            if(laboratoryAddress == '' || laboratoryKey == '' || batchId == ''){
                 Vue.$toast.open({
                     message: 'Please provide the neccessary details.',
                     type: 'error',

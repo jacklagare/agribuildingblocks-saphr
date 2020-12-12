@@ -229,8 +229,7 @@ export default {
             let batchId = this.sanitaryInspectionBatchId;
             let sanitaryInspectionResult = this.sanitaryInspectionResultFormInput == "passed" ?true:false;
 
-            if(inspectorAddress == '' || inspectorKey == '' || batchId == ''
-                || sanitaryInspectionResult == ''){
+            if(inspectorAddress == '' || inspectorKey == '' || batchId == ''){
 
                 Vue.$toast.open({
                     message: 'Please provide the neccessary details.',
