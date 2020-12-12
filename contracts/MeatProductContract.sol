@@ -16,7 +16,9 @@ contract MeatProductContract {
        bool initialized;
        bytes32 batchId;
        address supplier;
+       bytes32 sanitaryInspectionResult;
        bool sanitaryInspectionResultUploaded;
+       bytes32 labAnalysisResult;
        bool labAnalysisResultUploaded;
        bool passedSanitaryInspection;
        bool passedLabAnalysis;
@@ -92,17 +94,54 @@ contract MeatProductContract {
         return true;
     }
     
+    function getSanitaryInspectionResult(bytes32 batchId) public view returns (bytes32){
+        return meatProducts[batchId].sanitaryInspectionResult;
+    }
+    
     function getSanitaryInspectionStatus(bytes32 batchId) public view returns (bool){        
         return meatProducts[batchId].passedSanitaryInspection;
     }
-
+    
+    function getLabAnalysisResult(bytes32 batchId) public view returns (bytes32){
+        return meatProducts[batchId].labAnalysisResult;
+    }
+    
     function getLabAnalysisResultStatus(bytes32 batchId) public view returns (bool){
         return meatProducts[batchId].passedLabAnalysis;
     }
             
+    function setSanitaryInspectionResult(bytes32 batchId, bytes32 result, bool passed) onlyInspector public returns (bool){
+
+        require(meatProducts[batchId].sanitaryInspectionResultUploaded == false, 'Sanitary inspection result already published.');
+
+        meatProducts[batchId].sanitaryInspectionResult = result;
+        meatProducts[batchId].sanitaryInspectionResultUploaded = true;
+        
+        meatProducts[batchId].passedSanitaryInspection = passed;
+        
+        emit SanitaryInspectionResultUploaded(batchId, result, true);
+
+        return true;
+    }
+    
+    function setLabAnalysisResult(bytes32 batchId, bytes32 result,  bool passed) onlyLaboratory public returns (bool){
+
+        require(meatProducts[batchId].labAnalysisResultUploaded == false, 'Lab analysis result already published.');
+
+        meatProducts[batchId].labAnalysisResult = result;
+        meatProducts[batchId].labAnalysisResultUploaded = true;
+        
+        meatProducts[batchId].passedLabAnalysis = passed;
+        
+        emit SanitaryInspectionResultUploaded(batchId, result, true);
+
+        return true;
+    }
     
     // Events
     event UserRegistered(uint256 userType, address, bool isSupplier);
+    event SanitaryInspectionResultUploaded(bytes32 batchId, bytes32 value, bool success); // when the sanitary inspection result is uploaded
+    event LabAnalysisResultUploaded(bytes32 batchId, bytes32 value, bool success); // when the lab analysis result is uploaded
     event MeatProductRegistered(address supplier, bytes32 batchId, bool success); // when a new meat produt is registered
     
 }
