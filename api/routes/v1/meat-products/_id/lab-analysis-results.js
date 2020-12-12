@@ -15,11 +15,12 @@ module.exports = {
                 .getLabAnalysisResultStatus(batchIdHash)
                 .call({from: process.env.CONTRACT_ADDRESS})
 
-                res.send(200,{
-                    'message': 'Success',
-                    'result': status
-                });
-                return;
+            res.send(200,{
+                'message': 'Success',
+                'result': status
+            });
+            
+            return;
 
         }
         catch (err){
