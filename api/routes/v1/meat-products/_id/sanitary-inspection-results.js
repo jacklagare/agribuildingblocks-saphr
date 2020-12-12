@@ -122,7 +122,6 @@ module.exports = {
                 }
             }
             else{
-                console.log('here');
                 res.send(401,{
                     message: 'You have provided invalid credentials',
                     error: 'Invalid credentials.'

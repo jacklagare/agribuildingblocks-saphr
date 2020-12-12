@@ -54,78 +54,81 @@ module.exports = {
             let laboratoryPrivateKeyEncoded = bcrypt.hashSync(laboratoryPrivateKey,10);
 
             console.log('Checking list of laboratories...');
-            let laboratories = db.collectionGroup('laboratories')
-                .where('address', '==', laboratory);
+            let isKeyValid = false;
+
+            let docRef = await db.collection("laboratories").select("private_key").where("address", "==",  laboratory);
             
             console.log('Done checking list of laboratories...');
 
-            let result = await laboratories.get().then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
-
-                    if(!querySnapshot.empty){
-                        let hashedPrivateKey = doc._fieldsProto.private_key.stringValue;
-                        let isKeyValid = bcrypt.compareSync(laboratoryPrivateKey,hashedPrivateKey);
-                        
-                        if(isKeyValid){
-                            
-                            let batchIdHash = '0x' + keccak('keccak256').update(batchId).digest('hex');
-                            
-                            let resultsJSON = {
-                                laboratory: laboratory,
-                                analysisTimestamp: Date.now(),
-                                result: passed
-                            }
-
-                            let resultsHash = '0x' + keccak('keccak256').update(JSON.stringify(resultsJSON)).digest('hex');
-
-                            let uploadLaboratoryAnalysisResultEncodedABI = smartContract
-                                .methods
-                                .setLabAnalysisResult(batchIdHash,resultsHash,passed)
-                                .encodeABI();
-                            console.log('Sending transaction to blockchain...');
-                            let transactionHash = TransactionHelper.buildTransaction(
-                                laboratory,
-                                laboratoryPrivateKey,
-                                uploadLaboratoryAnalysisResultEncodedABI
-                            )    
-                            console.log('Done sending transaction to blockchain...');
-                            
-                            console.log('Checking status of transaction.');
+            await docRef.get().then(function(doc) {
                 
-                            let transactionReceipt = web3.eth.getTransactionReceipt(transactionHash);
-                    
-                            console.log('Done checking status of transaction.');
-
-                            if(transactionReceipt.status){
-                                res.send(200,{
-                                    message: 'Done uploading result.',
-                                    laboratory: laboratory,
-                                    batchId: batchId
-                                });
-                                return
-                            }
-                            else{
-                                res.send(500,{
-                                    message: 'Result not uploaded successfully.',
-                                    error: 'Blockchain transaction failed.'
-                                });
-                                return
-                            }
-                        }
-                        else{
-                            res.send(401,'Invalid credentials supplied.');
-                            return;
-                        }
-                    }
-
-                    else {
-                        res.send(401,'Invalid credentials supplied.');
-                        return;
-                    }
-
-                    
+                if (!doc.empty) {
+                    let hashedPrivateKey = doc.docs[0]._fieldsProto.private_key.stringValue;
+                    isKeyValid = bcrypt.compareSync(laboratoryPrivateKey,hashedPrivateKey);
+                }
+            }).catch(function(error) {
+                res.send(401,{
+                    message: 'You have provided invalid credentials',
+                    error: 'Invalid credentials.'
                 });
+                return;
             });
+
+            if(isKeyValid){
+                            
+                let batchIdHash = '0x' + keccak('keccak256').update(batchId).digest('hex');
+                
+                let resultsJSON = {
+                    laboratory: laboratory,
+                    analysisTimestamp: Date.now(),
+                    result: passed
+                }
+
+                let resultsHash = '0x' + keccak('keccak256').update(JSON.stringify(resultsJSON)).digest('hex');
+
+                let uploadLaboratoryAnalysisResultEncodedABI = smartContract
+                    .methods
+                    .setLabAnalysisResult(batchIdHash,resultsHash,passed)
+                    .encodeABI();
+                console.log('Sending transaction to blockchain...');
+
+                let transactionHash = await TransactionHelper.buildTransaction(
+                    laboratory,
+                    laboratoryPrivateKey,
+                    uploadLaboratoryAnalysisResultEncodedABI
+                )    
+                console.log('Done sending transaction to blockchain...');
+                
+                console.log('Checking status of transaction.');
+    
+                let transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+        
+                console.log('Done checking status of transaction.');
+
+                if(transactionReceipt.status){
+                    res.send(200,{
+                        message: 'Done uploading result.',
+                        laboratory: laboratory,
+                        batchId: batchId
+                    });
+                    return
+                }
+                else{
+                    res.send(500,{
+                        message: 'Result not uploaded successfully.',
+                        error: 'Blockchain transaction failed.'
+                    });
+                    return
+                }
+            }
+            else{
+                res.send(401,{
+                    message: 'You have provided invalid credentials',
+                    error: 'Invalid credentials.'
+                });
+                return;
+            }
+            
         }
         catch(err){
             console.log(err)
