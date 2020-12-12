@@ -31,9 +31,14 @@ module.exports = {
         // Convert buffer (array of 8-bit unsigned integers) to string
         const rawTx = '0x' + serializedTx.toString('hex'); // 0x + 247970ea6031894B5Da5B32c6E7BdDca223f6735
         
-        // Send signed transaction to the chain
-        const transaction = await web3.eth.sendSignedTransaction(rawTx);
-        
-        return transaction.transactionHash;
+        try{
+            // Send signed transaction to the chain
+            const transaction = await web3.eth.sendSignedTransaction(rawTx);
+            
+            return transaction.transactionHash;
+        }
+        catch(err){
+            return null;
+        }
     }
 }
