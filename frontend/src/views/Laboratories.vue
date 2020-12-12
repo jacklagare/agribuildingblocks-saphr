@@ -152,6 +152,7 @@ export default {
             analysisResultBatchId: "",
             analysisResult: "",
             uploadResultStatus: "",
+            analysisInspectionResult: ""
         };
     },
     components: {
@@ -170,7 +171,7 @@ export default {
                 Vue.$toast.open({
                     message: 'Please provide the neccessary details.',
                     type: 'error',
-                    duration: '5000'
+                    duration: 5000
                 });
 
                 return false;
@@ -192,13 +193,13 @@ export default {
                 
                 let self = this;
 
-               if(response.status == 200){
+                if(response.status == 200){
                     self.accountAddress = response.data.address;
                     self.accountKey = response.data.privateKey;
                     Vue.$toast.open({
                         message: 'Account has been created successfully.',
                         type: 'success',
-                        duration: '5000'
+                        duration: 5000
                     });
                     this.isLoading = false;
                 }
@@ -206,7 +207,7 @@ export default {
                     Vue.$toast.open({
                         message: 'Account creation failed.',
                         type: 'error',
-                        duration: '5000'
+                        duration: 5000
                     });
                     this.isLoading = false;
                 } 
@@ -215,7 +216,7 @@ export default {
                 Vue.$toast.open({
                     message: 'Account creation failed.',
                     type: 'error',
-                    duration: '5000'
+                    duration: 5000
                 });
                 this.isLoading = false;
             }
@@ -234,7 +235,7 @@ export default {
                 Vue.$toast.open({
                     message: 'Please provide the neccessary details.',
                     type: 'error',
-                    duration: '5000'
+                    duration: 5000
                 });
 
                 return false;
@@ -261,7 +262,7 @@ export default {
                     Vue.$toast.open({
                         message: 'Laboratory analysis uploaded successfully.',
                         type: 'success',
-                        duration: '5000'
+                        duration: 5000
                     });
                     this.isLoading = false;
                 }
@@ -270,7 +271,7 @@ export default {
                     Vue.$toast.open({
                         message: 'Laboratory analysis upload failed.',
                         type: 'error',
-                        duration: '5000'
+                        duration: 5000
                     });
                     this.isLoading = false;
                 } 
@@ -279,7 +280,7 @@ export default {
                 Vue.$toast.open({
                     message: 'Laboratory analysis upload failed.',
                     type: 'error',
-                    duration: '5000'
+                    duration: 5000
                 });
                 this.isLoading = false;
             }
