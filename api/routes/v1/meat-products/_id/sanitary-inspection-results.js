@@ -54,10 +54,6 @@ module.exports = {
             let inspectorPrivateKeyEncoded = bcrypt.hashSync(inspectorPrivateKey,10);
 
             console.log('Checking list of inspectors...');
-            /*let inspectors = db.collectionGroup('inspectors')
-                .where('address', '==', inspector);
-            */
-                
 
             let isKeyValid = false;
 
