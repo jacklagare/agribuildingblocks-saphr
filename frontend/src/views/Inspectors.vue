@@ -130,6 +130,10 @@
 import axios from 'axios';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+import Vue from 'vue';
+Vue.use(VueToast);
 
 export default { 
 
@@ -163,28 +167,59 @@ export default {
             let inspectorName = this.inspectorName;
             let businessAddress = this.businessAddress;
 
+            if(inspectorName == '' || businessAddress == ''){
+                Vue.$toast.open({
+                    message: 'Please provide the neccessary details.',
+                    type: 'error',
+                    duration: '5000'
+                });
+
+                return false;
+            }
+
             let data = {
                 name: inspectorName,
                 businessAddress: businessAddress
             }
             this.isLoading = true;
-            let response = await axios.post('http://localhost:8085/v1/inspectors',data, {
-                headers: {
-                    'Content-Type' : 'application/json'
-                }
-            });
-            
-            let self = this;
 
-            if(response.status == 200){
-                self.accountAddress = response.data.address;
-                self.accountKey = response.data.privateKey;
-                console.log('done');
+            try{
+                let response = await axios.post('http://localhost:8085/v1/inspectors',data, {
+                    headers: {
+                        'Content-Type' : 'application/json'
+                    }
+                });
+                
+                let self = this;
+
+                if(response.status == 200){
+                    self.accountAddress = response.data.address;
+                    self.accountKey = response.data.privateKey;
+                    Vue.$toast.open({
+                        message: 'Account has been created successfully.',
+                        type: 'success',
+                        duration: '5000'
+                    });
+                    this.isLoading = false;
+                }
+                else{
+                    Vue.$toast.open({
+                        message: 'Account creation failed.',
+                        type: 'error',
+                        duration: '5000'
+                    });
+                    this.isLoading = false;
+                } 
+            
             }
-            else{
-                console.log('failed')
-            } 
-            this.isLoading = false;
+            catch(err){
+                Vue.$toast.open({
+                    message: 'Account creation failed.',
+                    type: 'error',
+                    duration: '5000'
+                });
+                this.isLoading = false;
+            }
         },
 
         async recordInspectionStatus() {
@@ -194,6 +229,18 @@ export default {
             let batchId = this.sanitaryInspectionBatchId;
             let sanitaryInspectionResult = this.sanitaryInspectionResultFormInput == "passed" ?true:false;
 
+            if(inspectorAddress == '' || inspectorKey == '' || batchId == ''
+                || sanitaryInspectionResult == ''){
+
+                Vue.$toast.open({
+                    message: 'Please provide the neccessary details.',
+                    type: 'error',
+                    duration: '5000'
+                });
+
+                return false;
+            }
+
             let data = {
                 inspectorAddress: inspectorAddress,
                 inspectorKey: inspectorKey,
@@ -201,23 +248,43 @@ export default {
             }
 
             this.isLoading = true;
-            let response = await axios.post('http://localhost:8085/v1/meat-products/'+batchId+'/sanitary-inspection-results',data, {
-                headers: {
-                    'Content-Type' : 'application/json'
-                }
-            });
-            
-            let self = this;
 
-            if(response.status == 200){
-                self.uploadResultStatus = "Result successfully uploaded."
-                console.log('done')
+            try{
+                let response = await axios.post('http://localhost:8085/v1/meat-products/'+batchId+'/sanitary-inspection-results',data, {
+                    headers: {
+                        'Content-Type' : 'application/json'
+                    }
+                });
+                
+                let self = this;
+
+                if(response.status == 200){
+                        Vue.$toast.open({
+                            message: 'Sanitary inspection uploaded successfully.',
+                            type: 'success',
+                            duration: '5000'
+                        });
+                        this.isLoading = false;
+                }
+                else{
+                    self.uploadResultStatus = "Failed"
+                    Vue.$toast.open({
+                        message: 'Sanitary inspection upload failed.',
+                        type: 'error',
+                        duration: '5000'
+                    });
+                    this.isLoading = false;
+                } 
+                
             }
-            else{
-                self.uploadResultStatus = "Result was not uploaded."
-                console.log('failed')
-            } 
-            this.isLoading = false;
+            catch(err){
+                Vue.$toast.open({
+                    message: 'Sanitary inspection upload failed.',
+                    type: 'error',
+                    duration: '5000'
+                });
+                this.isLoading = false;
+            }
         },
     }
 }
