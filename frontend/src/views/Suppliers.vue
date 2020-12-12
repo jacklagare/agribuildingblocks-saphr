@@ -68,7 +68,7 @@
     <v-form>
             <v-container>
                 <v-text-field
-                v-model="businessAddress"
+                v-model="supplierAddress"
                 counter="25"
                 label="Supplier Address"
                 >
