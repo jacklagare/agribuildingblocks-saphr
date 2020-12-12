@@ -111,6 +111,10 @@
 import axios from 'axios';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+import Vue from 'vue';
+Vue.use(VueToast);
 
 export default { 
     
@@ -140,28 +144,50 @@ export default {
             let businessName = this.businessName;
             let businessAddress = this.businessAddress;
 
+            if(businessName == '' || businessAddress == ''){
+
+                Vue.$toast.open({
+                    message: 'Please provide the neccessary details.',
+                    type: 'error',
+                    duration: '5000'
+                });
+
+                return false;
+            }
+
             let data = {
                 name: businessName,
                 businessAddress: businessAddress
             }
             this.isLoading = true;
-            let response = await axios.post('http://localhost:8085/v1/suppliers',data, {
-                headers: {
-                    'Content-Type' : 'application/json'
-                }
-            });
-            
-            let self = this;
+            let response;
 
-            if(response.status == 200){
-                self.accountAddress = response.data.address;
-                self.accountKey = response.data.privateKey;
-                console.log('done');
+            try{
+                response = await axios.post('http://localhost:8085/v1/suppliers',data, {
+                    timeout: 15000,
+                    headers: {
+                        'Content-Type' : 'application/json'
+                    }
+                });
+
+                this.accountAddress = response.data.address;
+                this.accountKey = response.data.privateKey;
+
+                Vue.$toast.open({
+                    message: 'Account has been created successfully.',
+                    type: 'success',
+                    duration: '5000'
+                });
+                this.isLoading = false;
             }
-            else{
-                console.log('failed')
-            } 
-            this.isLoading = false;
+            catch(err){
+                Vue.$toast.open({
+                    message: 'Account creation failed.',
+                    type: 'error',
+                    duration: '5000'
+                });
+                this.isLoading = false;
+            }            
         },
 
         async registerMeatProduct() {
@@ -169,29 +195,62 @@ export default {
             let supplierAddress = this.supplierAddress;
             let supplierKey = this.supplierKey;
 
+            if(supplierAddress == '' || supplierKey == ''){
+
+                Vue.$toast.open({
+                    message: 'Please provide the neccessary details.',
+                    type: 'error',
+                    duration: '5000'
+                });
+
+                return false;
+            }
+
+
             let data = {
                 supplierAddress: supplierAddress,
                 supplierKey: supplierKey
             }
             this.isLoading = true;
-            let response = await axios.post('http://localhost:8085/v1/meat-products',data, {
-                headers: {
-                    'Content-Type' : 'application/json'
-                }
-            });
-            
-            let self = this;
 
-            if(response.status == 200){
-                self.registerMeatProductStatus = 'Success';
-                self.batchId = response.data.batchId; 
-                console.log('done')
+            try{
+                let response = await axios.post('http://localhost:8085/v1/meat-products',data, {
+                    headers: {
+                        'Content-Type' : 'application/json'
+                    }
+                });
+                
+                let self = this;
+
+                if(response.status == 200){
+                    self.registerMeatProductStatus = 'Success';
+                    self.batchId = response.data.batchId; 
+                    Vue.$toast.open({
+                        message: 'Meat product has been registered successfully.',
+                        type: 'success',
+                        duration: '5000'
+                    });
+                    this.isLoading = false;
+                }
+                else{
+                    self.registerMeatProductStatus = 'Failed';
+                    Vue.$toast.open({
+                        message: 'Meat product registration failed.',
+                        type: 'error',
+                        duration: '5000'
+                    });
+                    this.isLoading = false;
+                } 
+                
             }
-            else{
-                self.registerMeatProductStatus = 'Failed';
-                console.log('failed')
-            } 
-            this.isLoading = false;
+            catch(err){
+                Vue.$toast.open({
+                    message: 'Meat product registration failed.',
+                    type: 'error',
+                    duration: '5000'
+                });
+                this.isLoading = false;
+            }
         },
     }
 }
