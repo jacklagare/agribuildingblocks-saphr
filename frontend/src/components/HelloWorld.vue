@@ -63,19 +63,7 @@
             href="/generate-qr-code"
         >
         Generate QR Code
-    </v-btn>
-    <br/><br/>
-        <v-btn
-            color="primary"
-            depressed
-            elevation="7"
-            outlined
-            text
-            href="/check-meat-product"
-        >
-        Check Meat Product
-    </v-btn>
-        
+    </v-btn>    
       </v-col>
     </v-row>
   </v-container>
