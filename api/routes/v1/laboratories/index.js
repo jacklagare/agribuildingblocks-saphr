@@ -86,7 +86,7 @@ module.exports = {
                 }
             }
             else{
-                res.send(500,{
+                res.send(400,{
                     message: 'Account creation failed',
                     error: 'Account being created already exists.'
                 });
