@@ -149,7 +149,7 @@ export default {
                 Vue.$toast.open({
                     message: 'Please provide the neccessary details.',
                     type: 'error',
-                    duration: '5000'
+                    duration: 5000
                 });
 
                 return false;
@@ -176,7 +176,7 @@ export default {
                 Vue.$toast.open({
                     message: 'Account has been created successfully.',
                     type: 'success',
-                    duration: '5000'
+                    duration: 5000
                 });
                 this.isLoading = false;
             }
@@ -184,7 +184,7 @@ export default {
                 Vue.$toast.open({
                     message: 'Account creation failed.',
                     type: 'error',
-                    duration: '5000'
+                    duration: 5000
                 });
                 this.isLoading = false;
             }            
@@ -200,7 +200,7 @@ export default {
                 Vue.$toast.open({
                     message: 'Please provide the neccessary details.',
                     type: 'error',
-                    duration: '5000'
+                    duration: 5000
                 });
 
                 return false;
@@ -228,7 +228,7 @@ export default {
                     Vue.$toast.open({
                         message: 'Meat product has been registered successfully.',
                         type: 'success',
-                        duration: '5000'
+                        duration: 5000
                     });
                     this.isLoading = false;
                 }
@@ -237,7 +237,7 @@ export default {
                     Vue.$toast.open({
                         message: 'Meat product registration failed.',
                         type: 'error',
-                        duration: '5000'
+                        duration: 5000
                     });
                     this.isLoading = false;
                 } 
@@ -247,7 +247,7 @@ export default {
                 Vue.$toast.open({
                     message: 'Meat product registration failed.',
                     type: 'error',
-                    duration: '5000'
+                    duration: 5000
                 });
                 this.isLoading = false;
             }
