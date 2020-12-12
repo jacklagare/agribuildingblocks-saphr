@@ -54,80 +54,85 @@ module.exports = {
             let inspectorPrivateKeyEncoded = bcrypt.hashSync(inspectorPrivateKey,10);
 
             console.log('Checking list of inspectors...');
-            let inspectors = db.collectionGroup('inspectors')
+            /*let inspectors = db.collectionGroup('inspectors')
                 .where('address', '==', inspector);
-            
-                console.log('Done checking list of inspectors...');
-
-            let result = await inspectors.get().then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
-
-                    if(!querySnapshot.empty){
-                        let hashedPrivateKey = doc._fieldsProto.private_key.stringValue;
-                        let isKeyValid = bcrypt.compareSync(inspectorPrivateKey,hashedPrivateKey);
-                        console.log(isKeyValid);
-                        if(isKeyValid){
-                            
-                            let batchIdHash = '0x' + keccak('keccak256').update(batchId).digest('hex');
-                            
-                            let resultsJSON = {
-                                inspector: inspector,
-                                inspectionTimestamp: Date.now(),
-                                result: passed
-                            }
-
-                            let resultsHash = '0x' + keccak('keccak256').update(JSON.stringify(resultsJSON)).digest('hex');
-
-                            let uploadSanitaryInspectionResultEncodedABI = smartContract
-                                .methods
-                                .setSanitaryInspectionResult(batchIdHash,resultsHash,passed)
-                                .encodeABI();
-
-                            console.log('Sending transaction to blockchain...');
-                            let transactionHash = TransactionHelper.buildTransaction(
-                                inspector,
-                                inspectorPrivateKey,
-                                uploadSanitaryInspectionResultEncodedABI
-                            )    
-                            console.log('Done sending transaction to blockchain...');
-                            
-                            console.log('Checking status of transaction.');
+            */
                 
-                            let transactionReceipt = web3.eth.getTransactionReceipt(transactionHash);
-                    
-                            console.log('Done checking status of transaction.');
 
-                            if(transactionReceipt.status){
-                                res.send(200,{
-                                    message: 'Done uploading result.',
-                                    inspector: inspector,
-                                    batchId: batchId
-                                });
-                                return
-                            }
-                            else{
-                                res.send(500,{
-                                    message: 'Result not uploaded successfully.',
-                                    error: 'Blockchain transaction failed.'
-                                });
-                                return
-                            }
-                           
-                        }
-                        else{
-                            res.send(401,'Invalid credentials supplied.');
-                            return;
-                        }
-                    }
+            let isKeyValid = false;
 
-                    else {
-                        res.send(401,'Invalid credentials supplied.');
-                        return;
-                    }
+            let docRef = await db.collection("inspectors").select("private_key").where("address", "==",  inspector);
+            console.log('Done checking list of inspectors...');
 
-                    
+            await docRef.get().then(function(doc) {
+                
+                if (!doc.empty) {
+                    let hashedPrivateKey = doc.docs[0]._fieldsProto.private_key.stringValue;
+                    isKeyValid = bcrypt.compareSync(inspectorPrivateKey,hashedPrivateKey);
+                }
+            }).catch(function(error) {
+                res.send(401,{
+                    message: 'You have provided invalid credentials',
+                    error: 'Invalid credentials.'
                 });
+                return;
             });
+
+            if(isKeyValid){
+                            
+                let batchIdHash = '0x' + keccak('keccak256').update(batchId).digest('hex');
+                
+                let resultsJSON = {
+                    inspector: inspector,
+                    inspectionTimestamp: Date.now(),
+                    result: passed
+                }
+
+                let resultsHash = '0x' + keccak('keccak256').update(JSON.stringify(resultsJSON)).digest('hex');
+
+                let uploadSanitaryInspectionResultEncodedABI = smartContract
+                    .methods
+                    .setSanitaryInspectionResult(batchIdHash,resultsHash,passed)
+                    .encodeABI();
+
+                console.log('Sending transaction to blockchain...');
+                let transactionHash = await TransactionHelper.buildTransaction(
+                    inspector,
+                    inspectorPrivateKey,
+                    uploadSanitaryInspectionResultEncodedABI
+                )    
+                console.log('Done sending transaction to blockchain...');
+                
+                console.log('Checking status of transaction.');
+    
+                let transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+        
+                console.log('Done checking status of transaction.');
+
+                if(transactionReceipt.status){
+                    res.send(200,{
+                        message: 'Done uploading result.',
+                        inspector: inspector,
+                        batchId: batchId
+                    });
+                    return
+                }
+                else{
+                    res.send(500,{
+                        message: 'Result not uploaded successfully.',
+                        error: 'Blockchain transaction failed.'
+                    });
+                    return
+                }
+            }
+            else{
+                console.log('here');
+                res.send(401,{
+                    message: 'You have provided invalid credentials',
+                    error: 'Invalid credentials.'
+                });
+                return;
+            }
         }
         catch(err){
             console.log(err)
