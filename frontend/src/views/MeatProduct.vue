@@ -2,6 +2,17 @@
     <div>
         <br/><br/><br/><br/>
         <h1> Meat Product </h1>
+        <v-btn
+        color="primary"
+        depressed
+        elevation="7"
+        icon
+        outlined
+        text
+        href="/"
+    >
+        <v-icon>mdi-home</v-icon>
+    </v-btn>
         <br/><br/>
         
         <p>Batch ID: {{batchId}}</p>
