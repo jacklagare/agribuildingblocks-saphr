@@ -2,10 +2,10 @@
     <div>
         <br/><br/><br/><br/>
         <p>{{errorMessage}}</p>
-
+        
         <h2>Batch ID: {{batchId}}</h2>
-        <h2>Inspection Result: {{inspectionResult}}</h2>
-        <h2>Lab Analysis Result: {{labAnalysisResult}}</h2>
+        <h2>Inspection Result: <v-icon large color="red darken-2">{{iconValueInspection}}</v-icon> {{inspectionResult}}</h2>
+        <h2>Lab Analysis Result: <v-icon large :color="iconColorLab">{{iconValueLab}}</v-icon> {{labAnalysisResult}}</h2>
         
     </div>
 </template>
@@ -19,8 +19,12 @@ export default {
         return {
             errorMessage: "",
             batchId: "",
-            "inspectionResult": "",
-            "labAnalysisResult": "",
+            inspectionResult: "",
+            labAnalysisResult: "",
+            iconValueInspection: "",
+            iconColorInspection: "",
+            iconValueLab: "",
+            iconColorLab: "",
         }
     },
 
@@ -48,9 +52,13 @@ export default {
                 if(response.status == 200){
                     if(response.data.result){
                         self.inspectionResult = "PASSED";
+                        self.iconValueInspection = "mdi-check-circle";
+                        self.iconColorInspection = "green darken-2";
                     }
                     else{
                         self.inspectionResult = "FAILED";
+                        self.iconValueInspection = "mdi-close-circle";
+                        self.iconColorInspection = "red darken-2";
                     }
 
                     response = await axios.get(`http://localhost:8085/v1/meat-products/${batchIdParam}/lab-analysis-results`, {
@@ -61,9 +69,13 @@ export default {
                     if(response.status == 200){
                         if(response.data.result){
                             self.labAnalysisResult = "PASSED";
+                            self.iconValueLab = "mdi-check-circle";
+                            self.iconColorLab = "green darken-2";
                         }
                         else{
                             self.labAnalysisResult = "FAILED";
+                            self.iconValueLab = "mdi-close-circle";
+                            self.iconColorLab = "red darken-2";
                         }
                     }
                     else{
