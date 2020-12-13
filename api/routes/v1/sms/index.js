@@ -52,7 +52,7 @@ module.exports = {
                 try{
                     let batchIdHash = '0x' + keccak('keccak256').update(batchId).digest('hex');
         
-                    let status = await smartContract
+                    let status = smartContract
                         .methods
                         .getLabAnalysisResultStatus(batchIdHash)
                         .call({from: process.env.CONTRACT_ADDRESS})
@@ -68,7 +68,7 @@ module.exports = {
                     let batchId = req.params.id;
                     let batchIdHash = '0x' + keccak('keccak256').update(batchId).digest('hex');
         
-                    let status = await smartContract
+                    let status = smartContract
                         .methods
                         .getSanitaryInspectionStatus(batchIdHash)
                         .call({from: process.env.CONTRACT_ADDRESS})
