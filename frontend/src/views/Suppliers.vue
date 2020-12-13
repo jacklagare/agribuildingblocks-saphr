@@ -7,19 +7,7 @@
         <br/>
         <h1><v-icon large>mdi-truck</v-icon> Suppliers</h1>
         <br/>
-        <v-btn
-            color="primary"
-            depressed
-            elevation="7"
-            icon
-            outlined
-            text
-            href="/"
-        >
-            <v-icon>mdi-home</v-icon>
-        </v-btn>
-        <br/><br/><br/><br/>
-
+        
         <!-- Form for registering supplier to the blockchain --> 
         <h2>Register Account</h2>
         <v-container>
@@ -53,7 +41,7 @@
                     Submit
                     </v-btn>
                 </v-col>
-                    <v-col md="6">
+                <v-col md="6">
                     <div id="accountResult">
                         <br/>
                         <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
@@ -65,7 +53,6 @@
             </v-row> 
         </v-container>
         
-        <br/><br/><br/><br/>
 
         <h2>Register Meat Product</h2> 
         <p>Please include <code><b>0x</b></code> in the address and key.</p>
@@ -107,7 +94,7 @@
                 <p>Please take note of the information below. This will not be saved by the application.</p>
                 <br/>
                 <p><b>Status:</b>{{registerMeatProductStatus}}</p>
-                <p><b>Batch ID:</b> <code>{{batchId}}</code></p>
+                <p><b>Batch ID:</b>{{batchId}}</p>
             </div>
             <br/><br/><br/><br/>
         </v-col>
@@ -267,3 +254,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .suppliers{
+        text-align: center;
+    }
+</style>

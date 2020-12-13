@@ -5,24 +5,14 @@
         :is-full-page="fullPage">
     </loading>    
     <br/>  
-    <h1>Laboratories</h1>
+    <h1><v-icon large>mdi-microscope</v-icon> Laboratories</h1>
     <br/>
-    <v-btn
-        color="primary"
-        depressed
-        elevation="7"
-        icon
-        outlined
-        text
-        href="/"
-    >
-        <v-icon>mdi-home</v-icon>
-    </v-btn>
-    <br/><br/><br/><br/>
     <div id ="registerAccountContainer">
-    <h3>Register Account</h3>
-    <br/>
-    <v-form>
+    <h2>Register Account</h2>
+    <v-container>
+        <v-row no-gutters>
+            <v-col md="6">
+                <v-form>
             <v-container>
                 <v-text-field
                 v-model="laboratoryName"
@@ -49,77 +39,81 @@
         >
         Submit
     </v-btn>
-    <br/><br/>
-    <div id="accountResult">
-        <br/><br/>
-    <br/><br/>
-        <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
-        <br/>
-        <p id="accountAddress"><b>Address:</b> {{accountAddress}}</p>
-        <p id="accountKey"><b>Private Key:</b> {{accountKey}}</p>
-    </div>
-    </div>
-    <br/><br/><br/><br/>
-
-    <h3>Record Laboratory Analysis Result</h3>
-    <p>Please include <code><b>0x</b></code> in the address and key.</p>
+            </v-col>
+            <v-col md="6">
+                <div id="accountResult">
+                    <br/>
+                    <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
+                    <br/>
+                    <p id="accountAddress"><b>Address:</b> {{accountAddress}}</p>
+                    <p id="accountKey"><b>Private Key:</b> {{accountKey}}</p>
+                </div>
+            </v-col>
+        </v-row>
+    </v-container>
     <br/>
-    <v-form>
-            <v-container>
-                <v-text-field
-                v-model="laboratoryAnalysisAddress"
-                counter="25"
-                label="Laboratory Address"
-                >
-                </v-text-field>
+    <h2>Record Laboratory Analysis Result</h2>
+    <p>Please include <code><b>0x</b></code> in the address and key.</p>
+    <v-container>
+        <v-row no-gutters>
+            <v-col md="6">
+                <v-form>
+                    <v-container>
+                        <v-text-field
+                        v-model="laboratoryAnalysisAddress"
+                        counter="25"
+                        label="Laboratory Address"
+                        >
+                        </v-text-field>
 
-                <v-text-field
-                    v-model="laboratoryAnalysisKey"
-                    counter="25"
-                    label="Laboratory Private Key"
-                    >
-                </v-text-field>
+                        <v-text-field
+                            v-model="laboratoryAnalysisKey"
+                            counter="25"
+                            label="Laboratory Private Key"
+                            >
+                        </v-text-field>
 
-                <v-text-field
-                v-model="laboratoryAnalysisBatchId"
-                counter="25"
-                label="Batch ID"
-                >
-                </v-text-field>
-                <v-radio-group
-                    v-model="analysisInspectionResult"
-                    row
-                >
-                    <v-radio
-                    label="Passed"
-                    value="passed"
-                    ></v-radio>
-                    <v-radio
-                    label="Failed"
-                    value="failed"
-                    ></v-radio>
-                </v-radio-group>
+                        <v-text-field
+                        v-model="laboratoryAnalysisBatchId"
+                        counter="25"
+                        label="Batch ID"
+                        >
+                        </v-text-field>
+                        <v-radio-group
+                            v-model="analysisInspectionResult"
+                            row
+                        >
+                            <v-radio
+                            label="Passed"
+                            value="passed"
+                            ></v-radio>
+                            <v-radio
+                            label="Failed"
+                            value="failed"
+                            ></v-radio>
+                        </v-radio-group>
 
-            </v-container>
-        </v-form>
-        <v-btn
-            color="primary"
-            depressed
-            elevation="7"
-            outlined
-            text
-            @click="recordAnalysisStatus"
-        >
-        Submit
-    </v-btn>
-    <br/><br/>
-    <div id="recordLaboratoryStatusResult">
-        <br/><br/>
-    <br/><br/>
-        {{uploadResultStatus}}
+                    </v-container>
+                </v-form>
+                <v-btn
+                    color="primary"
+                    depressed
+                    elevation="7"
+                    outlined
+                    text
+                    @click="recordAnalysisStatus"
+                >
+                Submit
+            </v-btn>
+            </v-col>
+            <v-col md="6">
+                <div id="recordLaboratoryStatusResult">
+                    {{uploadResultStatus}}
+                </div>
+            </v-col>
+        </v-row>
+    </v-container>
     </div>
-    <br/><br/>
-    <br/><br/>
 </div>
 </template>
 
@@ -285,3 +279,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .laboratories{
+        text-align: center;
+    }
+</style>

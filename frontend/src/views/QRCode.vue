@@ -1,47 +1,41 @@
 <template>
-    <div>
+    <div class="qrcode">
         <loading :active.sync="isLoading" 
         :can-cancel="true" 
         :is-full-page="fullPage">
-        </loading>    
+        </loading>  
+        <br/>  
+        <h1><v-icon large>mdi-qrcode-edit</v-icon> Generate QR Code</h1>
         <br/><br/>
-        <h1>Generate QR Code</h1>
-        <br/>
-        <v-btn
-            color="primary"
-            depressed
-            elevation="7"
-            icon
-            outlined
-            text
-            href="/"
-        >
-            <v-icon>mdi-home</v-icon>
-        </v-btn>
-        <br/><br/>
-        <br/><br/>
-        <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
-        <br/><br/>
-        <v-form>
-            <v-container>
-                <v-text-field
-                v-model="batchId"
-                counter="25"
-                label="Batch ID"
-                >
-                </v-text-field>
-            </v-container>
-        </v-form>
-        <v-btn
-            color="primary"
-            depressed
-            elevation="7"
-            outlined
-            text
-            @click="generateQrCode"
-        >
-        Generate QR Code
-    </v-btn>
+        <v-container>
+            <v-row no-gutters>
+                <v-col md="6">
+                    <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
+                </v-col>
+                <v-col md="6">
+                    <v-form>
+                        <v-container>
+                            <v-text-field
+                            v-model="batchId"
+                            counter="25"
+                            label="Batch ID"
+                            >
+                            </v-text-field>
+                        </v-container>
+                    </v-form>
+                    <v-btn
+                        color="primary"
+                        depressed
+                        elevation="7"
+                        outlined
+                        text
+                        @click="generateQrCode"
+                    >
+                    Generate QR Code
+                </v-btn>
+                </v-col>
+            </v-row>
+        </v-container>
     </div>
 </template>
 <script>
@@ -76,3 +70,10 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+    .qrcode{
+        margin-top: 10%;
+        text-align: center;
+    }
+</style>

@@ -5,123 +5,114 @@
         :is-full-page="fullPage">
     </loading>    
     <br/>  
-    <h1>Inspectors</h1>
+    <h1><v-icon large>mdi-magnify</v-icon> Inspectors</h1>
     <br/>
-    <v-btn
-        color="primary"
-        depressed
-        elevation="7"
-        icon
-        outlined
-        text
-        href="/"
-    >
-        <v-icon>mdi-home</v-icon>
-    </v-btn>
-    <br/>
-    <br/><br/><br/><br/>
     <div id ="registerAccountContainer">
-    <h3>Register Account</h3>
-    <br/>
-    <v-form>
-            <v-container>
-                <v-text-field
-                v-model="inspectorName"
-                counter="25"
-                label="Inspector Name"
-                >
-                </v-text-field>
+    <h2>Register Account</h2>
+    <v-container>
+            <v-row no-gutters>
+                <v-col md="6">
+                    <v-form>
+                        <v-text-field
+                        v-model="inspectorName"
+                        counter="25"
+                        label="Inspector Name"
+                        >
+                        </v-text-field>
 
-                <v-text-field
-                    v-model="businessAddress"
-                    counter="25"
-                    label="Business Address"
+                        <v-text-field
+                            v-model="businessAddress"
+                            counter="25"
+                            label="Business Address"
+                            >
+                        </v-text-field>
+                    </v-form>
+                    <v-btn
+                        color="primary"
+                        depressed
+                        elevation="7"
+                        outlined
+                        text
+                        @click="registerInspector"
                     >
-                </v-text-field>
-            </v-container>
-        </v-form>
-        <v-btn
-            color="primary"
-            depressed
-            elevation="7"
-            outlined
-            text
-            @click="registerInspector"
-        >
-        Submit
-    </v-btn>
-    <br/><br/>
-    <div id="accountResult">
-        <br/><br/>
-    <br/><br/>
-        <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
-        <br/>
-        <p id="accountAddress"><b>Address:</b> {{accountAddress}}</p>
-        <p id="accountKey"><b>Private Key:</b> {{accountKey}}</p>
-    </div>
-    </div>
-    <br/><br/><br/><br/>
+                    Submit
+                    </v-btn>
+                </v-col>
+                <v-col md="6">
+                    <div id="accountResult">
+                        <br/>
+                        <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
+                        <br/>
+                        <p id="accountAddress"><b>Address:</b> {{accountAddress}}</p>
+                        <p id="accountKey"><b>Private Key:</b> {{accountKey}}</p>
+                    </div>
+                </v-col>
+            </v-row>
+    </v-container>
+    <v-container>
 
-    <h3>Record Inspection Result</h3>
+    <h2>Record Inspection Result</h2>
     <p>Please include <code><b>0x</b></code> in the address and key.</p>
-    <br/>
-    <v-form>
-            <v-container>
-                <v-text-field
-                v-model="sanitaryInspectionInspectorAddress"
-                counter="25"
-                label="Inspector Address"
-                >
-                </v-text-field>
+        <v-row no-gutters>
+            <v-col md="6">
+                <v-form>
+                    <v-container>
+                        <v-text-field
+                        v-model="sanitaryInspectionInspectorAddress"
+                        counter="25"
+                        label="Inspector Address"
+                        >
+                        </v-text-field>
 
-                <v-text-field
-                    v-model="sanitaryInspectionInspectorKey"
-                    counter="25"
-                    label="Inspector Private Key"
-                    >
-                </v-text-field>
+                        <v-text-field
+                            v-model="sanitaryInspectionInspectorKey"
+                            counter="25"
+                            label="Inspector Private Key"
+                            >
+                        </v-text-field>
 
-                <v-text-field
-                v-model="sanitaryInspectionBatchId"
-                counter="25"
-                label="Batch ID"
-                >
-                </v-text-field>
-                <v-radio-group
-                    v-model="sanitaryInspectionResultFormInput"
-                    row
-                >
-                
-                    <v-radio
-                    label="Passed"
-                    value="passed"
-                    ></v-radio>
-                    <v-radio
-                    label="Failed"
-                    value="failed"
-                    ></v-radio>
-                </v-radio-group>
+                        <v-text-field
+                        v-model="sanitaryInspectionBatchId"
+                        counter="25"
+                        label="Batch ID"
+                        >
+                        </v-text-field>
+                        <v-radio-group
+                            v-model="sanitaryInspectionResultFormInput"
+                            row
+                        >
+                        
+                            <v-radio
+                            label="Passed"
+                            value="passed"
+                            ></v-radio>
+                            <v-radio
+                            label="Failed"
+                            value="failed"
+                            ></v-radio>
+                        </v-radio-group>
 
-            </v-container>
-        </v-form>
-        <v-btn
-            color="primary"
-            depressed
-            elevation="7"
-            outlined
-            text
-            @click="recordInspectionStatus"
-        >
-        Submit
-    </v-btn>
-    <br/><br/>
-    <div id="recordInspectionStatusResult">
-        <br/><br/>
-    <br/><br/>
-        {{uploadResultStatus}}
+                    </v-container>
+                </v-form>
+                <v-btn
+                    color="primary"
+                    depressed
+                    elevation="7"
+                    outlined
+                    text
+                    @click="recordInspectionStatus"
+                >
+                    Submit
+                </v-btn>
+            </v-col>
+            <v-col md="6">
+                <div id="recordInspectionStatusResult">
+                    {{uploadResultStatus}}
+                </div>
+            </v-col>
+        </v-row>
+    </v-container>
     </div>
-    <br/><br/>
-    <br/><br/>
 </div>
 </template>
 
@@ -288,3 +279,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .inspectors{
+        text-align: center;
+    }
+</style>
