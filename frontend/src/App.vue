@@ -1,28 +1,57 @@
 <template>
-  <div id="app">
+  <v-app>
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+      <div class="d-flex align-center">
+        <v-img
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          transition="scale-transition"
+          width="40"
+        />
+
+        <v-img
+          alt="Vuetify Name"
+          class="shrink mt-1 hidden-sm-and-down"
+          contain
+          min-width="100"
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
+          width="100"
+        />
+      </div>
+
+      <v-spacer></v-spacer>
+       <v-btn text href="/"><v-icon>mdi-home</v-icon>&nbsp;&nbsp;Home</v-btn>
+       <v-btn text href="/suppliers"><v-icon>mdi-truck</v-icon>&nbsp;&nbsp;Suppliers</v-btn>
+       <v-btn text href="/inspectors"><v-icon>mdi-magnify</v-icon>&nbsp;&nbsp;Inspectors</v-btn>
+       <v-btn text href="/laboratories"><v-icon>mdi-miscroscope</v-icon>&nbsp;&nbsp;Laboratories</v-btn>
+       <v-btn text href="/generate-qr-code"><v-icon>mdi-qrcode-edit</v-icon>&nbsp;&nbsp;QR Code</v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <Main/>
+    </v-main>
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Main from './components/Main';
 
-#nav {
-  padding: 30px;
+export default {
+  name: 'App',
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  components: {
+    Main,
+  },
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+  data: () => ({
+    //
+  }),
+};
+</script>
