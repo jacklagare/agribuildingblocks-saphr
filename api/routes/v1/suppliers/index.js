@@ -43,6 +43,7 @@ module.exports = {
                 return
             });
 
+            // Create account
             if(uniqueSupplier){
                 let registerSupplierEncodedABI = smartContract
                     .methods

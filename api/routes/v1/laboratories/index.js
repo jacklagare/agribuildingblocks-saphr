@@ -44,6 +44,7 @@ module.exports = {
                 return
             });
 
+            // Create account
             if(uniqueLaboratory){
                 let registerLaboratoryEncodedABI = smartContract
                 .methods

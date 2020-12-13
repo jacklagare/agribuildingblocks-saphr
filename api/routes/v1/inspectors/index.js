@@ -44,6 +44,7 @@ module.exports = {
                 return
             });
 
+            // Create account
             if(uniqueInspector){
                 let registerSupplierEncodedABI = smartContract
                     .methods
