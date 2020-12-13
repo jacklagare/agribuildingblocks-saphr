@@ -13,6 +13,10 @@
             <v-row no-gutters>
                 <v-col md="6">
                     <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
+                    <br/>
+                    <p>To check information about the meat product, you may scan the QR code or 
+                    visit the link indicated below:</p>
+                    <i style="color:blue">{{generatedUrl}}</i>
                 </v-col>
                 <v-col md="6">
                     <v-form>
@@ -39,6 +43,8 @@
             </v-row>
         </v-container>
     </div>
+
+ 
     </v-container>
     </v-layout>
 </template>
@@ -56,6 +62,7 @@ export default {
             value: "",
             size: 300,
             batchId: "",
+            generatedUrl: "",
         }
     },
 
@@ -64,6 +71,7 @@ export default {
             this.isLoading = true;
             this.value = '';
             this.value = 'http://localhost:3000/check-meat-product?batchId='+this.batchId
+            this.generatedUrl = this.value;
             this.isLoading = false;
         }
     },
