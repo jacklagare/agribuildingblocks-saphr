@@ -4,7 +4,7 @@
   <div class="home">
        <br/>
       <h1>Welcome!</h1>
-      <p>This is an application developed by <b>AgriBuildingBlocks</b> that provides 
+      <p>This is a blockchain-based application developed by <b>AgriBuildingBlocks</b> that provides 
           meat suppliers, inspectors, laboratories, and consumers an easy way 
           to provide and retrieve information whether a particular meat product has 
           sanitary inspection and other health standards...</p>
