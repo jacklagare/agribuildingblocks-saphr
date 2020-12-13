@@ -39,13 +39,18 @@
                     </v-btn>
                 </v-col>
                 <v-col md="6">
-                    <div id="accountResult">
+                    <v-card class="accountDetailsCard">
+                        <v-card-text>
+                        <div id="accountResult">
+                            <br/>
+                            <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
+                            <br/>
+                            <p id="accountAddress"><b>Address:</b> {{accountAddress}}</p>
+                            <p id="accountKey"><b>Private Key:</b> {{accountKey}}</p>
+                        </div>
+                        </v-card-text>
                         <br/>
-                        <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
-                        <br/>
-                        <p id="accountAddress"><b>Address:</b> {{accountAddress}}</p>
-                        <p id="accountKey"><b>Private Key:</b> {{accountKey}}</p>
-                    </div>
+                    </v-card>
                 </v-col>
             </v-row>
     </v-container>
@@ -273,4 +278,9 @@ export default {
     .inspectors{
         text-align: center;
     }
+
+    .accountDetailsCard{
+        margin-left: 10%;
+    }
+
 </style>

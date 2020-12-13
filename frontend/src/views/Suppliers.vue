@@ -42,18 +42,23 @@
                     </v-btn>
                 </v-col>
                 <v-col md="6">
-                    <div id="accountResult">
+                    <v-card class="accountDetailsCard">
+                        <v-card-text>
+                        <div id="accountResult">
+                            <br/>
+                            <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
+                            <br/>
+                            <p id="accountAddress"><b>Address:</b> {{accountAddress}}</p>
+                            <p id="accountKey"><b>Private Key:</b> {{accountKey}}</p>
+                        </div>
+                        </v-card-text>
                         <br/>
-                        <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
-                        <br/>
-                        <p id="accountAddress"><b>Address:</b> {{accountAddress}}</p>
-                        <p id="accountKey"><b>Private Key:</b> {{accountKey}}</p>
-                    </div>
+                    </v-card>
                 </v-col>
             </v-row> 
         </v-container>
         
-
+        <br/>
         <h2>Register Meat Product</h2> 
         <p>Please include <code><b>0x</b></code> in the address and key.</p>
         <br/>
@@ -89,13 +94,19 @@
             </v-btn>
         </v-col>
         <v-col md="6">
-            <div id="registerMeatProductResult">
+            <v-card class="accountDetailsCard">
+                <v-card-text>
+                    <div id="registerMeatProductResult">
+                        <br/>
+                        <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
+                        <br/>
+                        <p><b>Status:</b>{{registerMeatProductStatus}}</p>
+                        <p><b>Batch ID:</b>{{batchId}}</p>
+                    </div>
+                </v-card-text>
                 <br/>
-                <p>Please take note of the information below. This will not be saved by the application.</p>
-                <br/>
-                <p><b>Status:</b>{{registerMeatProductStatus}}</p>
-                <p><b>Batch ID:</b>{{batchId}}</p>
-            </div>
+            </v-card>
+
             <br/><br/><br/><br/>
         </v-col>
     </v-row> 
@@ -258,5 +269,13 @@ export default {
 <style scoped>
     .suppliers{
         text-align: center;
+    }
+
+    .accountDetailsCard{
+        margin-left: 10%;
+    }
+
+    .meatProductDetailsCard{
+        margin-left: 10%;
     }
 </style>
