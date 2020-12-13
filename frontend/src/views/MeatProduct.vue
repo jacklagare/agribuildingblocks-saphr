@@ -1,25 +1,27 @@
 <template>
-    <div>
-        <br/><br/><br/><br/>
-        <h1> Meat Product </h1>
-        <v-btn
-        color="primary"
-        depressed
-        elevation="7"
-        icon
-        outlined
-        text
-        href="/"
-    >
-        <v-icon>mdi-home</v-icon>
-    </v-btn>
-        <br/><br/>
-        
-        <p>Batch ID: {{batchId}}</p>
-        <p>Inspection Result: <v-icon large color="red darken-2">{{iconValueInspection}}</v-icon> {{inspectionResult}}</p>
-        <p>Lab Analysis Result: <v-icon large :color="iconColorLab">{{iconValueLab}}</v-icon> {{labAnalysisResult}}</p>
+    <v-layout>
+    <v-container>
+    <div class="container">
+        <h1><v-icon large>mdi-food-steak</v-icon> Meat Product </h1>
+        <br/>
+        <v-card
+            class="mx-auto"
+            max-width="344"
+        >
+            <v-card-text>
+                <p class="display-1 text--primary">Batch ID</p>
+                <p>{{batchId}}</p>
+                <p class="display-1 text--primary">Inspection Result</p>
+                <p><v-icon large :color="iconColorInspection">{{iconValueInspection}}</v-icon> {{inspectionResult}}</p>
+                <p class="display-1 text--primary">Analysis Result</p>
+                <p><v-icon large :color="iconColorLab">{{iconValueLab}}</v-icon> {{labAnalysisResult}}</p>
+            </v-card-text>
+        </v-card>
+
         
     </div>
+    </v-container>
+    </v-layout>
 </template>
 
 <script>
@@ -111,3 +113,10 @@ export default {
 }
 
 </script>
+
+<style scoped>
+    .container{
+        text-align: center;
+        margin-top: -10%;
+    }
+</style>

@@ -1,4 +1,6 @@
 <template>
+    <v-layout>
+    <v-container>
     <div class="qrcode">
         <loading :active.sync="isLoading" 
         :can-cancel="true" 
@@ -37,6 +39,8 @@
             </v-row>
         </v-container>
     </div>
+    </v-container>
+    </v-layout>
 </template>
 <script>
 
@@ -73,7 +77,7 @@ export default {
 
 <style scoped>
     .qrcode{
-        margin-top: 10%;
+        margin-top: -20%;
         text-align: center;
     }
 </style>
