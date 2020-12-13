@@ -1,11 +1,11 @@
-const restify = require('restify')
-const routerMagic = require('restify-router-magic')
-const corsMiddleware = require('restify-cors-middleware')
+const restify = require('restify');
+const routerMagic = require('restify-router-magic');
+const corsMiddleware = require('restify-cors-middleware');
 const admin = require('firebase-admin');
 const serviceAccount = require('./config/serviceAccountKey.json');
 
 // Load configuration files
-require('dotenv').config({ path: 'config/.env' })
+require('dotenv').config({ path: 'config/.env' });
 
 // Initialize Firebase object
 global.firebase = admin.initializeApp({
@@ -17,17 +17,19 @@ global.contractABI = require('./config/contractABI.json');
 
 let server = restify.createServer();
 
+// Configure parsers
+
 server.use(
 	restify.plugins.queryParser({
 		mapParams: true
 	})
-)
+);
 
 server.use(
 	restify.plugins.bodyParser({
 		mapParams: true
 	})
-)
+);
 
 // Configure CORS
 
