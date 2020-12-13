@@ -13,7 +13,7 @@
        <v-btn text href="/"><v-icon>mdi-home</v-icon>&nbsp;&nbsp;Home</v-btn>
        <v-btn text href="/suppliers"><v-icon>mdi-truck</v-icon>&nbsp;&nbsp;Suppliers</v-btn>
        <v-btn text href="/inspectors"><v-icon>mdi-magnify</v-icon>&nbsp;&nbsp;Inspectors</v-btn>
-       <v-btn text href="/laboratories"><v-icon>mdi-miscroscope</v-icon>&nbsp;&nbsp;Laboratories</v-btn>
+       <v-btn text href="/laboratories"><v-icon>mdi-microscope</v-icon>&nbsp;&nbsp;Laboratories</v-btn>
        <v-btn text href="/generate-qr-code"><v-icon>mdi-qrcode-edit</v-icon>&nbsp;&nbsp;QR Code</v-btn>
     </v-app-bar>
 
