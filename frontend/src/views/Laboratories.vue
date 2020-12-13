@@ -55,8 +55,6 @@
     <h2>Record Laboratory Analysis Result</h2>
     <p>Please include <code><b>0x</b></code> in the address and key.</p>
     <v-container>
-        <v-row no-gutters>
-            <v-col md="6">
                 <v-form>
                     <v-container>
                         <v-text-field
@@ -105,14 +103,8 @@
                 >
                 Submit
             </v-btn>
-            </v-col>
-            <v-col md="6">
-                <div id="recordLaboratoryStatusResult">
-                    {{uploadResultStatus}}
-                </div>
-            </v-col>
-        </v-row>
     </v-container>
+    <br/>
     </div>
 </div>
 </template>
@@ -145,7 +137,6 @@ export default {
             analysisResultBatchId: "",
             analysisResult: "",
             uploadResultStatus: "",
-            analysisInspectionResult: ""
         };
     },
     components: {
@@ -246,8 +237,6 @@ export default {
                         'Content-Type' : 'application/json'
                     }
                 });
-                
-                let self = this;
 
                 if(response.status == 200){
                     Vue.$toast.open({
@@ -258,7 +247,6 @@ export default {
                     this.isLoading = false;
                 }
                 else{
-                    self.uploadResultStatus = "Failed"
                     Vue.$toast.open({
                         message: 'Laboratory analysis upload failed.',
                         type: 'error',
