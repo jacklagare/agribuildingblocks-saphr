@@ -30,6 +30,7 @@ module.exports = {
             
             let uniqueInspector = true;
 
+            // Check if inspector already exists. Stop execution if yes.
             await docRef.get().then(function(doc) {
                 if (!doc.empty) {
                     uniqueInspector = false;

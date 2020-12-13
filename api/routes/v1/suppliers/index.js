@@ -29,6 +29,7 @@ module.exports = {
             
             let uniqueSupplier = true;
 
+            // Check if supplier already exists. Stop execution if yes.
             await docRef.get().then(function(doc) {
                 if (!doc.empty) {
                     uniqueSupplier = false;

@@ -30,6 +30,7 @@ module.exports = {
             
             let uniqueLaboratory = true;
 
+            // Check if laboratory already exists. Stop execution if yes.
             await docRef.get().then(function(doc) {
                 if (!doc.empty) {
                     uniqueLaboratory = false;
