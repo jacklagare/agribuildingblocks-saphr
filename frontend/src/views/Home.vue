@@ -7,7 +7,7 @@
       <p>This is a blockchain-based application developed by <b>AgriBuildingBlocks</b> that provides 
           meat suppliers, inspectors, laboratories, and consumers an easy way 
           to provide and retrieve information whether a particular meat product has 
-          sanitary inspection and other health standards...</p>
+          passed sanitary inspection and other health standards...</p>
     <br/>
     <h2>Process</h2>
     <p>The timeline below summarizes what features and processes this application supports.</p>
