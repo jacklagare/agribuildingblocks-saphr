@@ -1,108 +1,120 @@
-
 <template>
     <div class="suppliers">
-    <loading :active.sync="isLoading" 
-        :can-cancel="true" 
-        :is-full-page="fullPage">
-    </loading>    
-    <br/>
-    <h1>Suppliers</h1>
-    <br/>
-    <v-btn
-        color="primary"
-        depressed
-        elevation="7"
-        icon
-        outlined
-        text
-        href="/"
-    >
-        <v-icon>mdi-home</v-icon>
-    </v-btn>
-    <br/><br/><br/><br/>
-    <!-- Form for registering supplier to the blockchain --> 
-    <div id ="registerAccountContainer">
-    <h3>Register Account</h3>
-    <br/>
-    <v-form>
-            <v-container>
-                <v-text-field
-                v-model="businessName"
-                counter="25"
-                label="Business Name"
-                >
-                </v-text-field>
-
-                <v-text-field
-                    v-model="businessAddress"
-                    counter="25"
-                    label="Business Address"
-                    >
-                </v-text-field>
-            </v-container>
-        </v-form>
+        <loading :active.sync="isLoading" 
+            :can-cancel="true" 
+            :is-full-page="fullPage">
+        </loading>    
+        <br/>
+        <h1><v-icon large>mdi-truck</v-icon> Suppliers</h1>
+        <br/>
         <v-btn
             color="primary"
             depressed
             elevation="7"
+            icon
             outlined
             text
-            @click="registerSupplier"
+            href="/"
         >
-        Submit
-    </v-btn>
-    <br/><br/>
-    <div id="accountResult">
-        <br/><br/>
-    <br/><br/>
-        <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
-        <br/>
-        <p id="accountAddress"><b>Address:</b> {{accountAddress}}</p>
-        <p id="accountKey"><b>Private Key:</b> {{accountKey}}</p>
-    </div>
-    </div>
-    <br/><br/><br/><br/>
+            <v-icon>mdi-home</v-icon>
+        </v-btn>
+        <br/><br/><br/><br/>
 
-    <h3>Register Meat Product</h3>
-    <p>Please include <code><b>0x</b></code> in the address and key.</p>
-    <v-form>
-            <v-container>
-                <v-text-field
-                v-model="supplierAddress"
-                counter="25"
-                label="Supplier Address"
-                >
-                </v-text-field>
+        <!-- Form for registering supplier to the blockchain --> 
+        <h2>Register Account</h2>
+        <v-container>
+            <v-row no-gutters>
+                <v-col md="6">
+                    <v-form>
+                            <v-container>
+                                <v-text-field
+                                v-model="businessName"
+                                counter="25"
+                                label="Business Name"
+                                >
+                                </v-text-field>
 
-                <v-text-field
-                    v-model="supplierKey"
-                    counter="25"
-                    label="Supplier Private Key"
+                                <v-text-field
+                                    v-model="businessAddress"
+                                    counter="25"
+                                    label="Business Address"
+                                    >
+                                </v-text-field>
+                            </v-container>
+                    </v-form>
+                    <v-btn
+                        color="primary"
+                        depressed
+                        elevation="7"
+                        outlined
+                        text
+                        @click="registerSupplier"
                     >
-                </v-text-field>
-            </v-container>
-        </v-form>
-        <v-btn
-            color="primary"
-            depressed
-            elevation="7"
-            outlined
-            text
-            @click="registerMeatProduct"
-        >
-        Submit
-    </v-btn>
-    <br/><br/>
-    <div id="registerMeatProductResult">
-        <br/><br/>
-    <br/><br/>
-        <p>Please take note of the information below. This will not be saved by the application.</p>
+                    Submit
+                    </v-btn>
+                </v-col>
+                    <v-col md="6">
+                    <div id="accountResult">
+                        <br/>
+                        <p id="accountNotice">Please take note of the information below. This will not be saved by the application.</p>
+                        <br/>
+                        <p id="accountAddress"><b>Address:</b> {{accountAddress}}</p>
+                        <p id="accountKey"><b>Private Key:</b> {{accountKey}}</p>
+                    </div>
+                </v-col>
+            </v-row> 
+        </v-container>
+        
+        <br/><br/><br/><br/>
+
+        <h2>Register Meat Product</h2> 
+        <p>Please include <code><b>0x</b></code> in the address and key.</p>
         <br/>
-        <p><b>Status:</b>{{registerMeatProductStatus}}</p>
-        <p><b>Batch ID:</b> <code>{{batchId}}</code></p>
-    </div>
+        <v-container>
+    <v-row no-gutters>
+        <v-col md="6">
+            <v-form>
+                    <v-container>
+                        <v-text-field
+                        v-model="supplierAddress"
+                        counter="25"
+                        label="Supplier Address"
+                        >
+                        </v-text-field>
+
+                        <v-text-field
+                            v-model="supplierKey"
+                            counter="25"
+                            label="Supplier Private Key"
+                            >
+                        </v-text-field>
+                    </v-container>
+            </v-form>
+            <v-btn
+                color="primary"
+                depressed
+                elevation="7"
+                outlined
+                text
+                @click="registerMeatProduct"
+            >
+            Submit
+            </v-btn>
+        </v-col>
+        <v-col md="6">
+            <div id="registerMeatProductResult">
+                <br/>
+                <p>Please take note of the information below. This will not be saved by the application.</p>
+                <br/>
+                <p><b>Status:</b>{{registerMeatProductStatus}}</p>
+                <p><b>Batch ID:</b> <code>{{batchId}}</code></p>
+            </div>
+            <br/><br/><br/><br/>
+        </v-col>
+    </v-row> 
+    </v-container>
     <br/><br/>
-    <br/><br/>
+        
 </div>
 </template>
 
