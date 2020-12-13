@@ -19,7 +19,7 @@ This guide does not provide detailed information on how to make sure that all de
 
 1. Create a `api/config/serviceAccountkey.json` file containing the details of your Firestore service account.
 2. Create an `api/config/.env` file with the information indicated in `api/config/envtemplate` file.
-3. Open `api/index.js` and update the variable `global.contractABI` in line 14 with your own ABI.
+3. If neccessary, update the contract ABI at `config/contractABI.json`. If there are no changes in the contract, this step can be skipped.
 4. Go to the root of the `api` directory and execute `npm install`. Once this is completed, execute `node index.js` to start the API.
 5. Open another console window and go to the `frontend` directory and execute `npm install`. Once completed, execute `npm run serve` to start the frontend application.
 6. You may now access the application at `http://localhost:3000`.
