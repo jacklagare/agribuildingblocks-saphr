@@ -53,8 +53,7 @@
 
     <h2>Record Inspection Result</h2>
     <p>Please include <code><b>0x</b></code> in the address and key.</p>
-        <v-row no-gutters>
-            <v-col md="6">
+        
                 <v-form>
                     <v-container>
                         <v-text-field
@@ -104,14 +103,8 @@
                 >
                     Submit
                 </v-btn>
-            </v-col>
-            <v-col md="6">
-                <div id="recordInspectionStatusResult">
-                    {{uploadResultStatus}}
-                </div>
-            </v-col>
-        </v-row>
     </v-container>
+    <br/>
     </div>
 </div>
 </template>
@@ -143,7 +136,6 @@ export default {
             inspectionResultBatchId: "",
             inspectionResult: "",
             sanitaryInspectionResultFormInput: "",
-            uploadResultStatus: "",
         };
     },
     components: {
@@ -245,9 +237,7 @@ export default {
                         'Content-Type' : 'application/json'
                     }
                 });
-                
-                let self = this;
-
+   
                 if(response.status == 200){
                         Vue.$toast.open({
                             message: 'Sanitary inspection uploaded successfully.',
@@ -257,7 +247,6 @@ export default {
                         this.isLoading = false;
                 }
                 else{
-                    self.uploadResultStatus = "Failed"
                     Vue.$toast.open({
                         message: 'Sanitary inspection upload failed.',
                         type: 'error',
