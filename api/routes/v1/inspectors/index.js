@@ -16,11 +16,12 @@ module.exports = {
 
             const db = firebase.firestore()
             
+            // Generate new accounts
             let newAccount = accounts.create();
             let address = newAccount.address;
-            
             let privateKey = newAccount.privateKey;
             
+            // Encode private key
             let encodedPrivateKey = bcrypt.hashSync(privateKey,10);
             
             console.log("Check for existing inspectors...");
