@@ -88,7 +88,6 @@ module.exports = {
 
                     // Retrieve laboratory analysis results
                     try{
-                        let batchId = req.params.id;
                         let batchIdHash = '0x' + keccak('keccak256').update(batchId).digest('hex');
             
                         let status = await smartContract
