@@ -2,11 +2,16 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
-      dark
     >
       <div class="d-flex align-center">
-        <h3>AgriBuildingBlocks > Meat Tracker</h3>
+          <a href="/">
+            <v-img
+                src="../assets/saphr-logo.png"
+                max-height="500"
+                max-width="250"
+                contain
+            ></v-img>
+          </a>
       </div>
 
       <v-spacer></v-spacer>
