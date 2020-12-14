@@ -1,5 +1,39 @@
 module.exports = {
 
+    get: async (req, res, next) => {
+        let subscriberNumber = req.params.subscriber_number.trim();
+        let subscriberAccessToken = req.params.access_token.trim();
+
+        const db = firebase.firestore();
+
+        let docRef = await db.collection("subscribers").select("subscriber_number").where("subscriber_number", "==",  subscriberNumber);
+
+        let uniqueSubscriber = true;
+
+        await docRef.get().then(function(doc) {
+            if (!doc.empty) {
+                uniqueSubscriber = false;
+            } 
+        }).catch(function(error) {
+            console.log(err)
+            res.send(500,{
+                message: 'Failed to add subscriber.',
+                error: error
+            });
+            return
+        });
+
+        let doc = await db.collection('subscibers').add({
+            subscriber_number: subscriberNumber,
+            subscriber_access_token: subscriberAccessToken,
+        });
+
+        res.send(200, {
+            message: 'Subscriber added.',
+        });
+
+    },
+
     post: async (req,res,next) => {
         const request = require('request');
         
