@@ -78,13 +78,10 @@
                     </v-form>
                     <v-btn
                         color="primary"
-                        depressed
-                        elevation="7"
-                        outlined
-                        text
+                        dark
                         @click="generateQrCode"
                     >
-                    Generate QR Code
+                    <v-icon>mdi-check</v-icon> Generate QR Code
                 </v-btn>
                 </v-col>
             </v-row>

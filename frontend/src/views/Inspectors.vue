@@ -29,10 +29,7 @@
                     </v-form>
                     <v-btn
                         color="primary"
-                        depressed
-                        elevation="7"
-                        outlined
-                        text
+                        dark
                         @click="registerInspector"
                     >
                     Submit
@@ -100,10 +97,7 @@
                 </v-form>
                 <v-btn
                     color="primary"
-                    depressed
-                    elevation="7"
-                    outlined
-                    text
+                    dark
                     @click="recordInspectionStatus"
                 >
                     Submit

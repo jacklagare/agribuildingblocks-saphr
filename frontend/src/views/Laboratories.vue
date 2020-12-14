@@ -31,10 +31,7 @@
         </v-form>
         <v-btn
             color="primary"
-            depressed
-            elevation="7"
-            outlined
-            text
+            dark
             @click="registerLaboratory"
         >
         Submit
@@ -100,10 +97,7 @@
                 </v-form>
                 <v-btn
                     color="primary"
-                    depressed
-                    elevation="7"
-                    outlined
-                    text
+                    dark
                     @click="recordAnalysisStatus"
                 >
                 Submit

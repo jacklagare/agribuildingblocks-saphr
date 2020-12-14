@@ -32,10 +32,7 @@
                     </v-form>
                     <v-btn
                         color="primary"
-                        depressed
-                        elevation="7"
-                        outlined
-                        text
+                        dark
                         @click="registerSupplier"
                     >
                     Submit
@@ -84,10 +81,7 @@
             </v-form>
             <v-btn
                 color="primary"
-                depressed
-                elevation="7"
-                outlined
-                text
+                dark
                 @click="registerMeatProduct"
             >
             Submit
