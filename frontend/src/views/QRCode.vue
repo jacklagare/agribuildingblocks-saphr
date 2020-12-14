@@ -118,7 +118,7 @@ export default {
         generateQrCode(){
             this.isLoading = true;
             this.value = '';
-            this.value = 'http://localhost:3000/check-meat-product?batchId='+this.batchId
+            this.value = 'http://localhost:3000/check-meat-product?batchId='+this.batchId.trim()
             this.generatedUrl = this.value;
             this.isLoading = false;
         }
