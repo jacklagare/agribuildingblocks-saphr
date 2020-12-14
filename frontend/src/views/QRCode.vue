@@ -16,7 +16,7 @@
                     <br/>
                     <p>To check information about the meat product, you may scan the QR code or 
                     visit the link indicated below:</p>
-                    <i style="color:blue">{{generatedUrl}}</i>
+                    <h3><v-icon>mdi-link</v-icon>&nbsp;&nbsp;<v-chip><a :href="generatedUrl" target="_new">{{generatedUrl}}</a></v-chip></h3>
                 </v-col>
                 <v-col md="6">
                     <v-form>
@@ -62,7 +62,7 @@ export default {
             value: "",
             size: 300,
             batchId: "",
-            generatedUrl: "",
+            generatedUrl: "https://track.saphr.com/check-meat-product?batchId=xxxxxx",
         }
     },
 
