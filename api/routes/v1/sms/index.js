@@ -31,7 +31,7 @@ module.exports = {
         res.send(200, {
             message: 'Subscriber added.',
         });
-
+        return;
     },
 
     post: async (req,res,next) => {
