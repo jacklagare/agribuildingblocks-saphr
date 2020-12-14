@@ -23,7 +23,7 @@ module.exports = {
             return
         });
 
-        let doc = await db.collection('subscibers').add({
+        let doc = await db.collection('subscribers').add({
             subscriber_number: subscriberNumber,
             subscriber_access_token: subscriberAccessToken,
         });
@@ -36,41 +36,27 @@ module.exports = {
 
     post: async (req,res,next) => {
         const request = require('request');
-        
-        // Receive SMS from consumer
-        //let smsObject = req;
-        
-        let jsonObject = {
-            "inboundSMSMessageList":{
-                "inboundSMSMessage":[
-                   {
-                      "dateTime":"Fri Nov 22 2013 12:12:13 GMT+0000 (UTC)",
-                      "destinationAddress":"tel:21581234",
-                      "messageId":null,
-                      "message":"ABB 12345",
-                      "resourceURL":null,
-                      "senderAddress":"tel:+639171234567"
-                   }
-                 ],
-                 "numberOfMessagesInThisBatch":1,
-                 "resourceURL":null,
-                 "totalNumberOfPendingMessages":null
-             }
-          };
-        
-        let messagesList = jsonObject.inboundSMSMessageList.inboundSMSMessage;
+        const { v4: uuidv4 } = require('uuid');
+        const db = firebase.firestore();
+
+        let clientCorrelator = uuidv4();
+
+        let smsObject = req.body;
+   
+        let messagesList = smsObject.inboundSMSMessageList.inboundSMSMessage;
 
         let batchId = '';
         let customerMobile = '';
+        let subscriberAccessToken = '';
         let message = '';
         let getLabAnalysisResults = '';
         let sanitaryInspectionResultMessage = '';
         let labAnalysisResultMessage = '';
 
-        messagesList.forEach( message => {
+        messagesList.forEach( async message => {
             
             batchId = message.message.split(' ')[1];
-            customerMobile = message.senderAddress.split(':')[1];
+            customerMobile = '+63' + message.senderAddress.split(':')[1];
 
             if(batchId == ''){
                 message = 'Invalid request. Format must be ABB <space> <BatchID>.';
@@ -86,12 +72,13 @@ module.exports = {
                 try{
                     let batchIdHash = '0x' + keccak('keccak256').update(batchId).digest('hex');
         
-                    let status = smartContract
+                    let status = await smartContract
                         .methods
                         .getLabAnalysisResultStatus(batchIdHash)
                         .call({from: process.env.CONTRACT_ADDRESS})
                     
-                        sanitaryInspectionResultMessage = 'Sanitary Inspection => ' + status ? 'PASSED' : 'FAILED';
+                    let statusMsg = status ? 'PASSED' : 'FAILED';
+                    sanitaryInspectionResultMessage = 'Sanitary Inspection => ' + statusMsg;
                 }
                 catch (err){
                     sanitaryInspectionResultMessage = 'Sanitary Inspection => Failed to retrieve data.';
@@ -102,18 +89,34 @@ module.exports = {
                     let batchId = req.params.id;
                     let batchIdHash = '0x' + keccak('keccak256').update(batchId).digest('hex');
         
-                    let status = smartContract
+                    let status = await smartContract
                         .methods
                         .getSanitaryInspectionStatus(batchIdHash)
                         .call({from: process.env.CONTRACT_ADDRESS})
                     
-                    labAnalysisResultMessage = 'Laboratory Analysis => ' + status ? 'PASSED' : 'FAILED';
+                    let statusMsg = status ? 'PASSED' : 'FAILED';
+                    labAnalysisResultMessage = 'Laboratory Analysis => ' + statusMsg;
         
                 }
                 catch (err){
                     labAnalysisResultMessage = 'Laboratory Analysis => Failed to retrieve data.';
                 }
 
+                // Retrieve subscriber information for sending SMS
+                let docRef = await db.collection("subscribers").select("subscriber_access_token").where("subscriber_number", "==",  customerMobile);
+
+                await docRef.get().then(function(doc) {
+                
+                    if (!doc.empty) {
+                        subscriberAccessToken = doc.docs[0]._fieldsProto.subscriber_access_token.stringValue;
+                    }
+                }).catch(function(error) {
+                    res.send(401,{
+                        message: 'You have provided invalid credentials',
+                        error: 'Invalid credentials.'
+                    });
+                    return;
+                });
             }
 
             message = `Batch ID =>  ${batchId} || ${sanitaryInspectionResultMessage} ||  ${labAnalysisResultMessage}`; 
@@ -121,12 +124,10 @@ module.exports = {
             // Send response to consumer
             
             let shortCode = process.env.SMS_API_SHORTCODE;
-            let accessToken = process.env.SMS_API_ACCESS_TOKEN;
-            let clientCorrelator = '264801';
             
             let options = { method: 'POST',
-                url: 'https://devapi.globelabs.com.ph/smsmessaging/v1/outbound/' + shortcode + '/requests',
-                qs: { 'access_token': accessToken },
+                url: 'https://devapi.globelabs.com.ph/smsmessaging/v1/outbound/' + shortCode + '/requests',
+                qs: { 'access_token': subscriberAccessToken },
                 headers: 
                 { 'Content-Type': 'application/json' },
                 body: 
@@ -134,7 +135,7 @@ module.exports = {
                     { 'clientCorrelator': clientCorrelator,
                         'senderAddress': shortCode,
                         'outboundSMSTextMessage': { 'message': message },
-                        'address': address } },
+                        'address': customerMobile } },
                 json: true 
             };
 
