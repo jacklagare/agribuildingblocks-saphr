@@ -1,5 +1,5 @@
 # AgriBuildingBlocks Meat Tracker
-This is a blockchain-based application developed by <b>AgriBuildingBlocks</b> that provides meat suppliers, inspectors, laboratories, and consumers an easy way to provide and retrieve information whether a particular meat product has sanitary inspection and other health standards.
+SAPHR is a blockchain-based application developed by <b>AgriBuildingBlocks</b> that provides meat suppliers, inspectors, laboratories, and consumers an easy way to provide and retrieve information whether a particular meat product has sanitary inspection and other health standards.
 
 ## Technologies
 
